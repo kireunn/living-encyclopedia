@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Космос — Живая энциклопедия</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+<link rel="stylesheet" href="css/chapter.css">
+<style>
+/* VOICE: a friendly space guide for 9–13-year-olds.
+   IDEA: one journey — from the centre of the Earth, up through the sky, to orbit, the Moon and the edge of the Solar System.
+         The nav shows where you are on the way.
+   STRUCTURE: every section has the same parts — a distance tag, a title, a short lead, then one thing to do.
+   PICTURE: real NASA photos and video, 3D models lit by a single sun so they look like real objects in space.
+   COLOUR: night black, white paper bands, one signal red from Erik's own mock-ups. */
+:root{color-scheme:dark;--bg:#05060d;--ink:#f3f5fb;--dim:#aab1c8;--acc:#ff5a4e;--accInk:#fff;--accDeep:#d63a2f;--line:rgba(255,255,255,.24);--paper:#f7f8fb;--paperInk:#0f1220;
+--fd:"Unbounded","Arial Black",system-ui,sans-serif;--fb:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif}
+.hero{background-image:url(vid/space-orbit.webp)}
+.hero::after{background:linear-gradient(90deg,rgba(3,4,10,.9) 0%,rgba(3,4,10,.55) 45%,rgba(3,4,10,.1) 80%)}
+.tagline{display:inline-flex;align-items:center;gap:10px;font-family:var(--fd);font-weight:500;font-size:13px;letter-spacing:.06em;color:var(--acc);text-transform:uppercase;margin-bottom:14px}
+.tagline::before{content:"";width:26px;height:2px;background:currentColor}
+.paper .tagline{color:var(--accDeep)}
+.lead{font-size:clamp(16px,1.5vw,18px)}
+.stars{background:#05060d url(img/bg-stars.webp) center/cover}
+
+/* one dark "window" for every 3D model that sits on a light band */
+.window{position:relative;border-radius:26px;overflow:hidden;background:radial-gradient(70% 70% at 50% 45%,#1a2036 0%,#070914 70%);box-shadow:0 30px 70px rgba(10,14,30,.35)}
+.window::before{content:"";position:absolute;inset:0;background:url(img/bg-stars.webp) center/cover;opacity:.55}
+.window model-viewer{position:relative}
+
+/* inside the Earth */
+.layerInfo{margin-top:8px;min-height:6em}
+.layerInfo b{display:block;font-family:var(--fd);font-weight:700;font-size:20px;margin-bottom:4px}
+
+/* where space begins */
+.sky{position:relative;height:clamp(300px,36vw,440px);border-radius:26px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.sky .air{position:absolute;inset:0;transition:opacity .2s}
+.sky video,.sky .starimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sky .starimg{background:url(vid/stars.webp) center/cover}
+.sky .label{position:absolute;left:20px;bottom:18px;right:20px;font-family:var(--fd);font-weight:700;font-size:clamp(18px,2.2vw,26px);text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.sky .km{position:absolute;right:18px;top:16px;font-family:var(--fb);font-weight:800;font-size:clamp(30px,4vw,48px);text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.alt{display:flex;align-items:center;gap:14px;margin-top:18px}
+.alt input{flex:1;accent-color:var(--acc);height:36px}
+.marks{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-top:2px}
+
+/* rocket */
+.pad{height:clamp(420px,46vw,560px);display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.pad model-viewer{width:100%;height:88%;transition:transform 2.6s cubic-bezier(.55,0,.9,.4)}
+.pad.go model-viewer{transform:translateY(-130%)}
+.pad.fire model-viewer{animation:shake .08s linear infinite}
+.pad.go.fire model-viewer{animation:none}
+@keyframes shake{50%{translate:1px 0}}
+.flame{position:absolute;left:50%;bottom:4%;width:120px;height:120px;transform:translateX(-50%) scale(.2);border-radius:50%;background:radial-gradient(circle,#fff6d0 0%,#ffb347 30%,rgba(255,90,40,.6) 55%,transparent 72%);opacity:0;transition:opacity .4s,transform .4s;filter:blur(2px)}
+.pad.fire .flame{opacity:1;transform:translateX(-50%) scale(1.3)}
+.pad.go .flame{transition:transform 2.6s cubic-bezier(.55,0,.9,.4),opacity 2.6s;transform:translate(-50%,-420%) scale(.6);opacity:0}
+.count{position:absolute;top:18px;left:0;right:0;text-align:center;font-family:var(--fd);font-weight:800;font-size:clamp(30px,5vw,56px);z-index:2;color:#fff}
+.rk{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:center}
+@media(max-width:960px){.rk{grid-template-columns:1fr 1fr}.rk .launchpic{display:none}}
+@media(max-width:640px){.rk{grid-template-columns:1fr}}
+.launchpic{aspect-ratio:3/4}
+
+/* astronaut */
+.astro{background-image:url(img/astro-deep.webp);min-height:min(80vh,720px);display:flex;align-items:center}
+.astro{--shade:linear-gradient(90deg,rgba(3,4,10,.88),rgba(3,4,10,.45) 55%,rgba(3,4,10,.05))}
+.steps{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(24px,5vw,70px);align-items:start}
+@media(max-width:860px){.steps{grid-template-columns:1fr}}
+.step{display:grid;grid-template-columns:54px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid #dfe2ec}
+.step .n{font-family:var(--fd);font-weight:800;font-size:28px;color:var(--accDeep);line-height:1}
+.step h3{margin:0 0 4px;font-size:19px}
+.step p{margin:0;font-size:15.5px;color:#3c4255}
+.sticky{position:sticky;top:90px}
+.sticky .mv{height:clamp(360px,44vw,560px)}
+@media(max-width:860px){.sticky{position:relative;top:0}}
+
+/* tech */
+.tech{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;margin-top:20px}
+@media(max-width:860px){.tech{grid-template-columns:1fr}}
+.tech .pic{aspect-ratio:16/10;margin-top:16px}
+#techName{font-family:var(--fd);font-weight:700;font-size:clamp(24px,3vw,34px);margin:0 0 .4em}
+
+/* pioneers */
+.pios{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:26px}
+@media(max-width:1000px){.pios{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.pios{grid-template-columns:1fr}.pio{flex-direction:row}.pio img{width:118px;aspect-ratio:auto;flex:none;object-position:50% 20%}.pio div{padding:14px}}
+.pio{background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 14px 40px rgba(15,18,32,.1);display:flex;flex-direction:column}
+.pio img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.pio div{padding:18px 18px 22px}
+.pio .date{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--accDeep);letter-spacing:.04em}
+.pio h3{font-size:18px;margin:.35em 0 .4em;line-height:1.25}
+.pio p{font-size:14.5px;color:#3c4255;margin:0}
+
+/* planets */
+.planets{background:#04050b url(img/bg-stars.webp) center/cover;overflow:hidden}
+.pstage{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,4vw,60px);align-items:center;margin-top:16px}
+@media(max-width:900px){.pstage{grid-template-columns:1fr}.pview{order:-1}}
+.pinfo,.pview{transition:opacity .25s,transform .25s}
+.swap .pinfo{opacity:0;transform:translateX(-14px)}
+.swap .pview{opacity:0;transform:scale(.94)}
+.pidx{font-family:var(--fd);font-weight:500;font-size:13px;letter-spacing:.08em;color:var(--dim);text-transform:uppercase}
+.pidx b{color:var(--acc);font-weight:700}
+.pname{font-family:var(--fd);font-weight:800;font-size:clamp(36px,5.4vw,68px);line-height:1;margin:.15em 0 .3em;letter-spacing:-.02em}
+.plead{font-size:17px;color:var(--ink);max-width:40ch}
+.pfacts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);border-radius:18px;overflow:hidden;margin-top:18px}
+.pfacts div{background:rgba(6,8,18,.82);padding:14px 16px;backdrop-filter:blur(6px)}
+.pfacts small{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.pfacts b{display:block;font-family:var(--fb);font-weight:800;font-size:clamp(19px,2vw,24px);line-height:1.2;margin:4px 0}
+.pfacts span{font-size:13.5px;color:#c8cde0;line-height:1.45}
+.pview{position:relative;height:clamp(340px,42vw,560px)}
+.pview::before{content:"";position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle,rgba(255,170,120,.12),transparent 65%)}
+.pview model-viewer{position:relative;width:100%;height:100%;--poster-color:transparent}
+.parrows{position:absolute;right:0;bottom:6px;display:flex;gap:10px;z-index:2}
+.parrows button{width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:rgba(6,8,18,.6);backdrop-filter:blur(6px);font-size:22px}
+.parrows button:hover{border-color:var(--acc)}
+.weigh{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px;font-size:15px}
+.weigh input{width:84px;min-height:44px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink);font:700 18px var(--fb);padding:0 12px}
+.weigh output{font-family:var(--fb);font-weight:800;color:var(--acc);font-size:20px}
+.track{position:relative;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-top:clamp(24px,4vw,44px);padding:10px 2px 4px;scroll-snap-type:x proximity}
+.track::-webkit-scrollbar{display:none}
+.track::before{content:"";position:absolute;left:0;right:0;top:46px;height:1px;background:rgba(255,255,255,.22);min-width:100%}
+.track button{position:relative;flex:1 0 82px;display:flex;flex-direction:column;align-items:center;gap:8px;border:0;background:none;padding:0 0 6px;scroll-snap-align:center;color:var(--dim);font-size:13px;font-weight:600}
+.track img{width:72px;height:72px;object-fit:contain;border-radius:50%;padding:4px;transition:transform .25s;background:transparent;outline:2px solid transparent;outline-offset:2px}
+.track button:hover img{transform:scale(1.08)}
+.track button[aria-pressed=true]{color:#fff}
+.track button[aria-pressed=true] img{outline-color:var(--acc);background:rgba(255,90,78,.08)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+@media(max-width:760px){.myths{grid-template-columns:1fr}}
+.myth{background:#fff;border-radius:20px;padding:20px;box-shadow:0 12px 34px rgba(15,18,32,.08);border:2px solid transparent}
+.myth q{display:block;font-weight:700;font-size:17px;quotes:none;margin-bottom:12px}
+.myth .ans{display:flex;gap:8px}
+.myth.ok{border-color:#2fbf8a}.myth.no{border-color:var(--accDeep)}
+.myth .res{font-size:14.5px;color:#3c4255;margin-top:10px}
+.myth .res b{color:var(--paperInk)}
+
+/* quiz + chapters */
+.quiz{position:relative;overflow:hidden}
+.quiz .vbg{opacity:.45}
+.quiz>.wrap{position:relative;z-index:1}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+@media(max-width:640px){.cards{grid-template-columns:1fr}}
+.card{position:relative;display:block;aspect-ratio:16/9;border-radius:20px;overflow:hidden;text-decoration:none}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover img{transform:scale(1.04)}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent 55%)}
+.card span{position:absolute;z-index:1;left:18px;bottom:14px;font-family:var(--fd);font-weight:700;font-size:26px;color:#fff}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Разделы главы">
+  <div class="wrap">
+    <a class="home" href="index.html">← Главы</a>
+    <div class="links">
+      <a href="#inside">Земля внутри</a>
+      <a href="#sky">Где космос</a>
+      <a href="#rocket">Ракета</a>
+      <a href="#astronaut">Космонавт</a>
+      <a href="#tech">Техника</a>
+      <a href="#pioneers">Первые</a>
+      <a href="#planets">Планеты</a>
+      <a href="#myths">Мифы</a>
+      <a href="#quiz">Тест</a>
+    </div>
+    <div class="meter" id="meter" title="Где ты сейчас">0 км</div>
+  </div>
+</nav>
+
+<header class="hero" data-alt="0 км">
+  <video class="vbg" autoplay muted loop playsinline preload="auto" poster="vid/space-orbit.webp" aria-hidden="true"><source src="vid/space-orbit.mp4" type="video/mp4"></video>
+  <div class="wrap">
+    <p class="kicker">Живая энциклопедия · Глава 2</p>
+    <h1>Космос</h1>
+    <p>Путешествие от центра Земли до края Солнечной системы. По дороге запустишь ракету, примеришь работу космонавта и покрутишь все планеты в 3D.</p>
+    <div class="row">
+      <a class="btn" href="#inside">Начать путешествие ↓</a>
+      <a class="btn ghost" href="#planets">Сразу к планетам</a>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 240 90 480 0 720 34 S 1200 80 1440 30 V90 H0Z"/></svg>
+</header>
+
+<section class="band paper" id="inside" data-alt="−6 371 км">
+  <div class="wrap split">
+    <div class="window"><model-viewer class="mv" src="models/core.glb" poster="img/poster/core.webp" alt="3D-модель Земли в разрезе" loading="lazy" camera-controls disable-zoom auto-rotate rotation-per-second="12deg" interaction-prompt="none" touch-action="pan-y" shadow-intensity="0" environment-image="neutral" tone-mapping="aces" exposure="1.1" camera-orbit="300deg 75deg 105%"></model-viewer></div>
+    <div>
+      <span class="tagline">−6 371 км · центр Земли</span>
+      <h2>Сначала заглянем под ноги</h2>
+      <p class="lead">Прежде чем взлететь, посмотрим, что у нас внизу. Если разрезать Землю, как яблоко, внутри окажется несколько слоёв. Нажми на слой:</p>
+      <div class="chips" id="layers" role="group" aria-label="Слои Земли"></div>
+      <div class="layerInfo" id="layerInfo" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band dark" id="sky" data-alt="100 км">
+  <div class="wrap split">
+    <div>
+      <span class="tagline">0 → 100 км · линия Кармана</span>
+      <h2>Где начинается космос?</h2>
+      <p class="lead">Космос начинается на <span class="hl">линии Кармана</span>, на высоте 100 километров. Там воздух такой редкий, что самолёт уже не может лететь, и дальше нужны ракеты.</p>
+      <p>Космос — огромное и почти пустое пространство, где находятся звёзды, планеты, луны, кометы и астероиды. Совсем пустым он не бывает: там летают отдельные атомы, излучение и пыль.</p>
+    </div>
+    <div>
+      <div class="sky" id="skyBox">
+        <div class="starimg"></div>
+        <video autoplay muted loop playsinline preload="none" poster="vid/stars.webp" class="vbg" aria-hidden="true"><source src="vid/stars.mp4" type="video/mp4"></video>
+        <div class="air" id="air"></div>
+        <div class="km" id="km">0 км</div>
+        <div class="label" id="skyTxt">Земля: голубое небо</div>
+      </div>
+      <div class="alt"><label for="alt" style="font-weight:700;font-size:14px">Поднимись выше</label><input id="alt" type="range" min="0" max="120" value="0"></div>
+      <div class="marks"><span>0</span><span>12 км · самолёты</span><span>50 км</span><span>100 км · космос</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band paper" id="rocket" data-alt="400 км">
+  <div class="wrap">
+    <span class="tagline">100 → 400 км · орбита</span>
+    <h2>Как летают ракеты?</h2>
+    <div class="rk">
+      <figure class="pic launchpic"><img src="img/nasa-launch.webp" alt="Ночной старт космического шаттла" loading="lazy"><figcaption>Старт шаттла ночью. Фото: NASA</figcaption></figure>
+      <div>
+        <p class="lead">Ракета сжигает топливо, и раскалённые газы с огромной скоростью вырываются вниз. Газы толкают ракету в обратную сторону — вверх.</p>
+        <p>Чтобы выйти на орбиту, нужно разогнаться почти до <span class="hl">28 000 км/ч</span>. Большие ракеты состоят из ступеней: пустая ступень отделяется, и ракета становится легче. Шаттл был многоразовым и садился на полосу, как самолёт.</p>
+        <button class="btn" id="launch" type="button">Запустить шаттл</button>
+      </div>
+      <div class="window pad" id="pad">
+        <div class="count" id="count" aria-live="polite"></div>
+        <div class="flame"></div>
+        <model-viewer id="shuttle" src="models/shuttle.glb" poster="img/poster/shuttle.webp" alt="3D-модель космического шаттла" loading="lazy" camera-controls disable-zoom interaction-prompt="none" touch-action="pan-y" shadow-intensity="0" environment-image="neutral" tone-mapping="aces" exposure="1.2" camera-orbit="180deg 90deg 115%" orientation="0deg -90deg 0deg"></model-viewer>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band photo-bg astro" id="astronaut" data-alt="400 км">
+  <div class="wrap">
+    <div style="max-width:560px">
+      <span class="tagline">400 км · космическая станция</span>
+      <h2>Как стать космонавтом</h2>
+      <p class="lead">Космонавты — настоящие исследователи. Перед полётом они годами учатся и тренируются, чтобы справиться с невесомостью, перегрузками и жизнью далеко от дома.</p>
+    </div>
+  </div>
+</section>
+<section class="band paper">
+  <div class="wrap steps">
+    <div id="steps"></div>
+    <div class="sticky"><div class="window"><model-viewer class="mv" src="models/astrowalk.glb" poster="img/poster/astrowalk.webp" alt="3D-модель идущего космонавта" loading="lazy" autoplay camera-controls disable-zoom interaction-prompt="none" touch-action="pan-y" shadow-intensity="0" environment-image="neutral" tone-mapping="aces" exposure="1.15" camera-orbit="30deg 80deg 135%"></model-viewer></div><span class="drag">Космонавт идёт в скафандре: покрути его</span></div>
+  </div>
+</section>
+
+<section class="band stars" id="tech" data-alt="400 км">
+  <div class="wrap">
+    <span class="tagline">400 км и дальше · техника</span>
+    <h2>Техника в космосе</h2>
+    <div class="chips" id="techTabs" role="group" aria-label="Выбери аппарат"></div>
+    <div class="tech">
+      <model-viewer class="mv" id="techMv" src="models/iss.glb" poster="img/poster/iss.webp" alt="3D-модель" loading="lazy" camera-controls disable-zoom auto-rotate rotation-per-second="14deg" interaction-prompt="none" touch-action="pan-y" shadow-intensity="0" environment-image="neutral" tone-mapping="aces" exposure="1.2" camera-orbit="20deg 70deg 105%"></model-viewer>
+      <div aria-live="polite">
+        <h3 id="techName"></h3>
+        <p class="lead" id="techText"></p>
+        <figure class="pic"><img id="techImg" alt="" loading="lazy"><figcaption id="techCap"></figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band paper" id="pioneers" data-alt="384 400 км">
+  <div class="wrap">
+    <span class="tagline">400 → 384 400 км · до Луны</span>
+    <h2>Первопроходцы космоса</h2>
+    <p class="lead">Животные и люди, которые первыми сделали шаг туда, где никто не был.</p>
+    <div class="pios" id="pioList"></div>
+  </div>
+</section>
+
+<section class="band planets" id="planets" data-alt="5,9 млрд км">
+  <div class="wrap">
+    <span class="tagline">до 5,9 млрд км · Солнечная система</span>
+    <h2>Планеты</h2>
+    <p class="lead" style="color:var(--dim)">Выбери планету и покрути её мышкой или пальцем. Её освещает Солнце, поэтому одна сторона в тени, как в настоящем космосе.</p>
+    <div class="pstage" id="pstage">
+      <div class="pinfo" aria-live="polite">
+        <div class="pidx"><b id="pnum">04</b> / 11 · <span id="ptype"></span></div>
+        <h3 class="pname" id="pname">Земля</h3>
+        <p class="plead" id="plead"></p>
+        <div class="pfacts" id="pfacts"></div>
+        <div class="weigh"><label for="kg">Твой вес на Земле</label><input id="kg" type="number" inputmode="decimal" min="1" max="200" value="35"><span>кг →</span><span>здесь: <output id="kgOut" for="kg"></output></span></div>
+      </div>
+      <div class="pview">
+        <model-viewer id="planet" src="models/earth.glb" poster="img/poster/earth.webp" alt="3D-модель планеты" camera-controls disable-zoom auto-rotate auto-rotate-delay="0" rotation-per-second="10deg" interaction-prompt="none" touch-action="pan-y" shadow-intensity="0" environment-image="env/sp68.jpg" tone-mapping="aces" exposure="2.8" camera-orbit="0deg 80deg 105%"></model-viewer>
+        <div class="parrows"><button id="prev" type="button" aria-label="Предыдущая">←</button><button id="next" type="button" aria-label="Следующая">→</button></div>
+      </div>
+    </div>
+    <div class="track" id="track" role="group" aria-label="Все планеты по порядку от Солнца"></div>
+  </div>
+</section>
+
+<section class="band paper" id="myths" data-alt="5,9 млрд км">
+  <div class="wrap">
+    <span class="tagline">Правда или миф?</span>
+    <h2>Мифы о космосе</h2>
+    <p class="lead">Как ты думаешь, это правда? Выбери ответ.</p>
+    <div class="myths" id="mythList"></div>
+  </div>
+</section>
+
+<section class="band dark quiz" id="quiz" data-alt="5,9 млрд км">
+  <video class="vbg" autoplay muted loop playsinline preload="none" poster="vid/stars.webp" aria-hidden="true"><source src="vid/stars.mp4" type="video/mp4"></video>
+  <div class="wrap">
+    <span class="tagline">Возвращаемся домой</span>
+    <h2>Проверь себя</h2>
+    <div id="qList"></div>
+    <div id="score" aria-live="polite"></div>
+    <h2 style="margin-top:60px">Другие главы</h2>
+    <div class="cards">
+      <a class="card" href="kity.html"><img src="img/oc-hero.webp" alt="" loading="lazy"><span>Киты</span></a>
+      <a class="card" href="futbol.html"><img src="img/fb-stadium-night.webp" alt="" loading="lazy"><span>Футбол</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Живая энциклопедия · Глава «Космос»</p>
+  <p>Фото: NASA и дизайн-макеты автора. Видео: Pexels. 3D-модели: библиотека Microsoft Office.</p>
+</footer>
+
+<script>
+{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* where am I: meter + nav */
+const meter=$('#meter'),alts=$$('[data-alt]'),links=$$('.links a');
+function onScroll(){const y=innerHeight*.4;let cur=alts[0],on=null;
+  for(const el of alts)if(el.getBoundingClientRect().top<y)cur=el;
+  for(const a of links){const t=document.querySelector(a.getAttribute('href'));if(t&&t.getBoundingClientRect().top<y)on=a}
+  meter.textContent=cur.dataset.alt;links.forEach(a=>a.classList.toggle('on',a===on));}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* earth layers */
+const L=[['Кора','5–70 км','Тонкая каменная корка, на которой мы живём. Под океаном она 5–10 км, под горами — до 70 км.'],['Мантия','≈ 2 900 км','Самый толстый слой. Горячий камень очень медленно течёт, как густой пластилин.'],['Внешнее ядро','жидкий металл','Расплавленное железо и никель. Его движение создаёт магнитное поле Земли, которое защищает нас от солнечного ветра.'],['Внутреннее ядро','≈ 5 000 °C','Твёрдый металлический шар в самом центре. Там почти так же горячо, как на поверхности Солнца.']];
+$('#layers').innerHTML=L.map((l,i)=>`<button class="chip" type="button" data-i="${i}" aria-pressed="${i===0}">${l[0]}</button>`).join('');
+function layer(i){$('#layerInfo').innerHTML=`<b>${L[i][0]} · ${L[i][1]}</b>${L[i][2]}`;$$('#layers .chip').forEach(c=>c.setAttribute('aria-pressed',+c.dataset.i===i));}
+$('#layers').onclick=e=>{const b=e.target.closest('button');if(b)layer(+b.dataset.i)};layer(0);
+
+/* sky: blue air fades as you go up, real stars appear */
+function sky(){const v=+$('#alt').value,t=Math.min(v/100,1);
+  $('#air').style.background=`linear-gradient(180deg,rgb(${Math.round(70-60*t)},${Math.round(150-130*t)},${Math.round(235-180*t)}) 0%,rgb(${Math.round(170-140*t)},${Math.round(215-170*t)},${Math.round(250-150*t)}) 100%)`;
+  $('#air').style.opacity=1-Math.pow(t,1.4);
+  $('#km').textContent=v+' км';
+  $('#skyTxt').textContent=v<1?'Земля: голубое небо':v<13?'Здесь летают самолёты':v<50?'Стратосфера: небо темнеет':v<100?'Почти космос':'Космос! Небо чёрное даже днём';}
+$('#alt').oninput=sky;sky();
+
+/* rocket */
+const pad=$('#pad'),cnt=$('#count'),lb=$('#launch');let busy=false;
+lb.onclick=()=>{
+  if(busy)return;
+  if(pad.classList.contains('go')){pad.classList.remove('go','fire');cnt.textContent='';lb.textContent='Запустить шаттл';return;}
+  busy=true;let n=3;cnt.textContent=n;
+  const t=setInterval(()=>{n--;if(n>0){cnt.textContent=n;if(n===1)pad.classList.add('fire');}else{clearInterval(t);cnt.textContent='Старт!';pad.classList.add('fire','go');setTimeout(()=>{busy=false;lb.textContent='Вернуть на старт';cnt.textContent='На орбите!';},2700);}},800);
+};
+
+/* astronaut steps */
+const S=[['Учись','Почти все космонавты хорошо знают физику, математику, биологию или технику. Чем больше знаешь, тем лучше.'],['Набирайся опыта','Космонавтами часто становятся лётчики, инженеры, врачи и учёные, которые уже умеют работать в трудных условиях.'],['Будь в форме','В космосе тело испытывает перегрузки и невесомость. Нужны сила, выносливость и здоровье.'],['Подай заявку','Космические агентства время от времени объявляют набор. Кандидатов проверяют на тестах и собеседованиях.'],['Учись общаться','Экипаж месяцами живёт в тесной станции. Важно спокойно договариваться и помогать друг другу.'],['Не сдавайся','Подготовка длится годами, а отбирают не с первого раза. Главное — продолжать.']];
+$('#steps').innerHTML=S.map((s,i)=>`<div class="step"><div class="n">${String(i+1).padStart(2,'0')}</div><div><h3>${s[0]}</h3><p>${s[1]}</p></div></div>`).join('');
+
+/* tech */
+const T=[{id:'iss',n:'МКС',t:'Международная космическая станция — дом на орбите на высоте около 400 км. Она летит со скоростью 28 000 км/ч и облетает Землю за 90 минут, поэтому экипаж видит 16 рассветов в сутки.',img:'img/nasa-iss.webp',cap:'МКС над Землёй. Фото: NASA'},
+ {id:'hubble',n:'Хаббл',t:'Космический телескоп «Хаббл» работает на орбите с 1990 года. Над атмосферой звёзды не мерцают, поэтому он делает очень чёткие снимки далёких галактик.',img:'img/milkyway.webp',cap:'Звёздное небо и Млечный Путь'},
+ {id:'curiosity',n:'Кьюриосити',t:'Марсоход размером с автомобиль. С 2012 года он ездит по Марсу, сверлит камни и ищет следы воды. Он даже сделал селфи на Марсе — смотри фото.',img:'img/nasa-curiosity-selfie.webp',cap:'Селфи марсохода на Марсе. Фото: NASA/JPL-Caltech'},
+ {id:'solar',n:'Модель системы',t:'Все планеты летят вокруг Солнца по своим орбитам. Чем дальше планета, тем дольше её год: Меркурию хватает 88 дней, а Нептуну нужно 165 лет.',img:'img/nasa-earthrise.webp',cap:'«Восход Земли» над Луной, 1968. Фото: NASA'}];
+$('#techTabs').innerHTML=T.map((x,i)=>`<button class="chip" type="button" data-i="${i}" aria-pressed="${i===0}">${x.n}</button>`).join('');
+function tech(i){const x=T[i],m=$('#techMv');m.poster=`img/poster/${x.id}.webp`;m.src=`models/${x.id}.glb`;m.alt='3D-модель: '+x.n;$('#techName').textContent=x.n;$('#techText').textContent=x.t;$('#techImg').src=x.img;$('#techImg').alt=x.cap;$('#techCap').textContent=x.cap;$$('#techTabs .chip').forEach(c=>c.setAttribute('aria-pressed',+c.dataset.i===i));}
+$('#techTabs').onclick=e=>{const b=e.target.closest('button');if(b)tech(+b.dataset.i)};tech(0);
+
+/* pioneers */
+const PI=[{n:'Лайка — первое животное на орбите',d:'3 ноября 1957',img:'img/laika.webp',t:'Собака Лайка полетела на корабле «Спутник-2» и стала первым живым существом на орбите. Вернуть корабль тогда ещё не умели, и Лайка погибла. Её помнят как героя, который открыл путь людям.'},
+ {n:'Юрий Гагарин — первый человек в космосе',d:'12 апреля 1961',img:'img/gagarin.webp',t:'На корабле «Восток-1» Гагарин облетел Землю за 108 минут и сказал знаменитое «Поехали!». С тех пор 12 апреля — День космонавтики.'},
+ {n:'Валентина Терешкова — первая женщина в космосе',d:'16 июня 1963',img:'img/tereshkova.webp',t:'На корабле «Восток-6» Терешкова почти трое суток летала вокруг Земли и облетела её 48 раз.'},
+ {n:'Нил Армстронг — первый человек на Луне',d:'20 июля 1969',img:'img/armstrong.webp',t:'Ступив на Луну, Армстронг сказал: «Это маленький шаг для человека, но огромный скачок для человечества». На фото — его напарник Базз Олдрин.'}];
+$('#pioList').innerHTML=PI.map(p=>`<article class="pio"><img src="${p.img}" alt="${esc(p.n)}" loading="lazy"><div><span class="date">${p.d}</span><h3>${esc(p.n)}</h3><p>${esc(p.t)}</p></div></article>`).join('');
+
+/* planets */
+const LIGHT={sun:['env/sp68.jpg','aces',2.6],saturn:['neutral','aces',1.25],uranus:['env/sp68.jpg','aces',3],neptune:['env/sp68.jpg','aces',3.2],pluto:['env/sp68.jpg','aces',3]};
+const P=[
+ {id:'sun',n:'Солнце',k:'звезда',g:27.9,t:'Наша звезда — огромный шар раскалённого газа. Без него на Земле не было бы жизни.',c:[['Размер','×109','В 109 раз шире Земли.'],['Поверхность','5 500 °C','А в центре — около 15 млн градусов.'],['Свет до Земли','8 мин 20 с','Мы видим Солнце таким, каким оно было 8 минут назад.'],['Возраст','4,6 млрд лет','И светить ему ещё примерно столько же.']]},
+ {id:'mercury',n:'Меркурий',k:'планета № 1',g:.38,t:'Самая маленькая и самая близкая к Солнцу планета.',c:[['От Солнца','58 млн км','Ближе всех к Солнцу.'],['Год','88 дней','Быстрее всех облетает Солнце.'],['Температура','−180…+430 °C','Днём жарче духовки, ночью холоднее морозилки.'],['Спутники','0','Ни одной луны.']]},
+ {id:'venus',n:'Венера',k:'планета № 2',g:.91,t:'Самая горячая планета, укрытая густыми облаками.',c:[['От Солнца','108 млн км','Ближайшая соседка Земли.'],['Температура','≈ 465 °C','Облака держат жар, как одеяло.'],['Сутки','243 дня','Сутки длиннее года!'],['Спутники','0','Луны нет.']]},
+ {id:'earth',n:'Земля',k:'планета № 3',g:1,t:'Наш дом и единственная планета, где известна жизнь.',c:[['От Солнца','150 млн км','Не слишком жарко и не слишком холодно.'],['Год','365 дней','Столько Земля летит вокруг Солнца.'],['Вода','71 %','Большая часть покрыта океанами.'],['Спутники','1','Наша Луна.']]},
+ {id:'moon',n:'Луна',k:'спутник Земли',g:.165,t:'Спутник Земли — единственное место за пределами Земли, где побывали люди.',c:[['От Земли','384 400 км','Свет летит оттуда чуть больше секунды.'],['Оборот','27 дней','Столько Луна летит вокруг Земли.'],['Следы','с 1969 года','Ветра нет, и следы астронавтов там до сих пор.'],['Что это','спутник','Луна — не планета.']]},
+ {id:'mars',n:'Марс',k:'планета № 4',g:.38,t:'Красная планета, по которой ездят марсоходы.',c:[['От Солнца','228 млн км','Красный из-за ржавой пыли.'],['Сутки','24 ч 37 мин','Почти как на Земле.'],['Гора Олимп','≈ 22 км','Самая высокая гора Солнечной системы.'],['Спутники','2','Фобос и Деймос.']]},
+ {id:'jupiter',n:'Юпитер',k:'планета № 5',g:2.53,t:'Газовый гигант, самая большая планета Солнечной системы.',c:[['Размер','×11','Внутри поместилось бы больше 1 300 Земель.'],['Сутки','≈ 10 ч','Вращается быстрее всех.'],['Красное пятно','шторм','Буря шире Земли длится сотни лет.'],['Спутники','больше 90','Ганимед — самая большая луна.']]},
+ {id:'saturn',n:'Сатурн',k:'планета № 6',g:1.07,t:'Планета с самыми красивыми кольцами.',c:[['Кольца','лёд и камни','Кусочки льда от пылинки до дома.'],['Год','29 лет','Столько он летит вокруг Солнца.'],['Плотность','легче воды','В огромной ванне Сатурн бы плавал.'],['Спутники','больше 100','Больше всех в Солнечной системе.']]},
+ {id:'uranus',n:'Уран',k:'планета № 7',g:.89,t:'Ледяной гигант, который вращается, лёжа на боку.',c:[['От Солнца','2,9 млрд км','Седьмая планета.'],['Наклон','на боку','Будто катится по орбите.'],['Год','84 года','Лето на полюсе — больше 20 лет.'],['Цвет','голубой','Его окрашивает газ метан.']]},
+ {id:'neptune',n:'Нептун',k:'планета № 8',g:1.14,t:'Самая далёкая планета, где дуют самые сильные ветры.',c:[['От Солнца','4,5 млрд км','Дальше всех планет.'],['Ветер','до 2 000 км/ч','Сильнее, чем где-либо ещё.'],['Год','165 лет','С 1846 года облетел Солнце один раз.'],['Спутники','больше 10','Самый большой — Тритон.']]},
+ {id:'pluto',n:'Плутон',k:'карликовая планета',g:.06,t:'Карликовая планета на краю Солнечной системы.',c:[['С 2006 года','карлик','Его перестали считать обычной планетой.'],['От Солнца','5,9 млрд км','Свет идёт туда больше 5 часов.'],['Сердце','ледник','Ледяная равнина в форме сердца.'],['Год','248 лет','Очень долгий путь вокруг Солнца.']]}
+];
+let pi=3;const mv=$('#planet'),stage=$('#pstage');
+$('#track').innerHTML=P.map((p,i)=>`<button type="button" data-i="${i}" aria-pressed="false"><img src="img/poster/${p.id}.webp" alt="" loading="lazy">${esc(p.n)}</button>`).join('');
+function render(){const p=P[pi],l=LIGHT[p.id]||['env/sp68.jpg','aces',2.8];
+  mv.poster=`img/poster/${p.id}.webp`;mv.environmentImage=l[0];mv.toneMapping=l[1];mv.exposure=l[2];mv.src=`models/${p.id}.glb`;mv.alt='3D-модель: '+p.n;
+  $('#pnum').textContent=String(pi+1).padStart(2,'0');$('#ptype').textContent=p.k;$('#pname').textContent=p.n;$('#plead').textContent=p.t;
+  $('#pfacts').innerHTML=p.c.map(c=>`<div><small>${esc(c[0])}</small><b>${esc(c[1])}</b><span>${esc(c[2])}</span></div>`).join('');
+  $$('#track button').forEach(b=>{const on=+b.dataset.i===pi;b.setAttribute('aria-pressed',on);if(on){const tr=$('#track');tr.scrollTo({left:b.offsetLeft-tr.clientWidth/2+b.clientWidth/2,behavior:'smooth'})}});
+  weigh();}
+function show(i){pi=(i+P.length)%P.length;stage.classList.add('swap');setTimeout(()=>{render();requestAnimationFrame(()=>stage.classList.remove('swap'))},230);}
+function weigh(){const k=parseFloat($('#kg').value)||0;$('#kgOut').textContent=(k*P[pi].g).toLocaleString('ru-RU',{maximumFractionDigits:1})+' кг';}
+$('#prev').onclick=()=>show(pi-1);$('#next').onclick=()=>show(pi+1);
+$('#track').onclick=e=>{const b=e.target.closest('button');if(b)show(+b.dataset.i)};
+$('#kg').oninput=weigh;
+addEventListener('keydown',e=>{const r=$('#planets').getBoundingClientRect();if(r.top<innerHeight*.6&&r.bottom>innerHeight*.4&&!e.target.matches('input')){if(e.key==='ArrowLeft')show(pi-1);if(e.key==='ArrowRight')show(pi+1);}});
+render();
+
+/* myths */
+const M=[['В космосе всегда очень холодно',0,'На солнечной стороне МКС металл нагревается больше 100 °C, а в тени остывает ниже −150 °C.'],['В космосе нет звука',1,'Звуку нужен воздух или вода, а в космосе почти пусто. Взрывы в фильмах на самом деле беззвучны.'],['Великую Китайскую стену видно с Луны',0,'Стена узкая, её с трудом видно даже с орбиты, а с Луны — точно нет.'],['Без скафандра человек в космосе сразу взорвётся',0,'Это очень опасно, но тело не взрывается. Человек теряет сознание за несколько секунд, поэтому скафандр обязателен.']];
+$('#mythList').innerHTML=M.map((m,i)=>`<div class="myth" data-i="${i}"><q>${esc(m[0])}</q><div class="ans"><button class="answer" type="button" data-a="1">Правда</button><button class="answer" type="button" data-a="0">Миф</button></div><div class="res" aria-live="polite"></div></div>`).join('');
+$('#mythList').onclick=e=>{const b=e.target.closest('button');if(!b)return;const c=b.closest('.myth');if(c.classList.contains('done'))return;const m=M[+c.dataset.i],ok=+b.dataset.a===m[1];c.classList.add('done',ok?'ok':'no');b.classList.add(ok?'right':'wrong');c.querySelector('.res').innerHTML=`<b>${ok?'Верно!':'Не совсем.'} ${m[1]?'Это правда.':'Это миф.'}</b> ${esc(m[2])}`;};
+
+/* quiz */
+const Q=[['Кто первым полетел в космос?',['Нил Армстронг','Юрий Гагарин','Валентина Терешкова'],1],['Какая планета самая горячая?',['Меркурий','Венера','Марс'],1],['Сколько летит свет от Солнца до Земли?',['1 секунду','Около 8 минут','Целый день'],1],['Где начинается космос?',['На высоте 10 км','На высоте 100 км','На Луне'],1],['Сколько спутников у Марса?',['Ни одного','Два','Больше 90'],1]];
+let done=0,good=0;
+$('#qList').innerHTML=Q.map((q,i)=>`<div class="q" data-i="${i}"><p>${i+1}. ${esc(q[0])}</p><div class="opts">${q[1].map((o,j)=>`<button class="answer" type="button" data-j="${j}">${esc(o)}</button>`).join('')}</div></div>`).join('');
+$('#qList').onclick=e=>{const b=e.target.closest('button');if(!b)return;const q=b.closest('.q');if(q.dataset.done)return;q.dataset.done=1;const r=Q[+q.dataset.i][2],j=+b.dataset.j;b.classList.add(j===r?'right':'wrong');if(j!==r)q.querySelectorAll('button')[r].classList.add('right');done++;if(j===r)good++;if(done===Q.length)$('#score').textContent=`${good} из ${Q.length}. ${good===Q.length?'Готов к полёту!':good>=3?'Почти на орбите!':'Слетай ещё раз!'}`;};
+}
+</script>
+<script src="js/life.js"></script>
+</body>
+</html>

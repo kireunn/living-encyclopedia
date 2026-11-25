@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Футбол — Живая энциклопедия</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+<link rel="stylesheet" href="css/chapter.css">
+<style>
+/* VOICE: a friendly match commentator for 9–13-year-olds.
+   IDEA: the page is one 90-minute match; the nav shows the match clock.
+   PICTURE: real stadium photos, a real aerial pitch with TV-style overlays, a 3D ball.
+   COLOUR: night-stadium black, white paper bands, one floodlight-lime accent. */
+:root{color-scheme:dark;--bg:#050a07;--ink:#f3f8f1;--dim:#b3c2b5;--acc:#b8f13c;--accInk:#0d1a03;--accDeep:#3d7d10;--line:rgba(255,255,255,.26);--paper:#f8faf6;--paperInk:#0e150d;
+--fd:"Unbounded","Arial Black",system-ui,sans-serif;--fb:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif}
+.hero{background-image:url(img/fb-stadium-night.webp)}
+.hero .ballwrap{position:absolute;right:max(4vw,10px);top:50%;transform:translateY(-55%);width:min(34vw,420px);z-index:1}
+.hero .ballwrap model-viewer{width:100%;height:min(34vw,420px);animation:hop 1.1s cubic-bezier(.5,0,.5,1) infinite alternate;--poster-color:transparent}
+@keyframes hop{from{transform:translateY(-14%)}to{transform:translateY(14%)}}
+@media(max-width:760px){.hero .ballwrap{position:relative;right:auto;top:auto;transform:none;width:200px;margin:0 0 -20px auto}.hero .ballwrap model-viewer{height:200px}.hero{flex-direction:column;align-items:stretch;justify-content:flex-end}.hero .wrap{padding-top:40px}}
+
+/* pitch with overlays */
+.pitch{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.35);aspect-ratio:1600/1040;background:#1d3a12 url(img/fb-pitch.webp) center/100% 100%}
+.pitch .z{position:absolute;border:3px solid var(--acc);background:color-mix(in srgb,var(--acc) 22%,transparent);opacity:0;transition:opacity .35s;pointer-events:none;box-shadow:0 0 24px color-mix(in srgb,var(--acc) 70%,transparent)}
+.pitch .z.on{opacity:1}
+.pitch .z.round{border-radius:50%}
+.pitch .z.spot{border-radius:50%;width:3.2%;aspect-ratio:1;height:auto;transform:translate(-50%,-50%)}
+.zoneInfo{margin-top:16px;min-height:5.2em}
+.zoneInfo b{font-family:var(--fb);font-weight:800;font-size:22px;color:var(--accDeep);display:block}
+.dot{position:absolute;width:clamp(18px,2.6vw,30px);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:#fff;color:#0d1a03;font:800 clamp(9px,1.1vw,13px)/1 var(--fb);display:grid;place-items:center;box-shadow:0 3px 10px rgba(0,0,0,.55),0 0 0 2px rgba(0,0,0,.25);transition:left .7s cubic-bezier(.3,.8,.3,1),top .7s cubic-bezier(.3,.8,.3,1)}
+.dot.gk{background:var(--acc)}
+.dot.red{background:#ff4d4d;color:#fff}
+.dot.me{background:#ffd23f;width:clamp(22px,3vw,34px)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:6px}
+
+/* ball */
+.ballband{background:radial-gradient(60% 60% at 70% 50%,#14240d,#050a07 70%)}
+.ballpics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.ballpics .pic{aspect-ratio:4/3}
+
+/* penalty game */
+.pen{background:linear-gradient(180deg,#050a07,#0b140a)}
+.goal{position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#0a1408 url(img/fb-goal-kick.webp) center/cover;box-shadow:0 30px 70px rgba(0,0,0,.5);user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.goal::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.5),transparent 40%)}
+.goal .flyball{position:absolute;left:50%;top:76%;width:7%;aspect-ratio:1;transform:translate(-50%,-50%);z-index:2;pointer-events:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
+.goal .glove{position:absolute;top:0;bottom:0;width:50%;z-index:3;border:0;background:transparent;font-size:0}
+.goal .glove.l{left:0}.goal .glove.r{right:0}
+.goal .glove:active,.goal .glove.hit{background:rgba(184,241,60,.16)}
+.goal .msg{position:absolute;left:0;right:0;top:10%;text-align:center;z-index:4;font-family:var(--fd);font-weight:700;text-transform:uppercase;font-size:clamp(22px,4vw,46px);text-shadow:0 3px 20px rgba(0,0,0,.8);pointer-events:none}
+.goal .hint{position:absolute;left:0;right:0;bottom:12px;text-align:center;z-index:4;font-size:14px;font-weight:600;pointer-events:none}
+.scoreline{display:flex;gap:22px;margin-top:14px;font-weight:700}
+.scoreline b{font-family:var(--fb);font-weight:800;font-size:28px;color:var(--acc);margin-right:6px}
+
+/* offside */
+.offline{position:absolute;top:2.9%;bottom:2.9%;width:0;border-left:3px dashed #ffd23f;transform:translateX(-1.5px);transition:left .2s}
+.offline span{position:absolute;top:6px;right:8px;font-size:12px;font-weight:700;color:#ffd23f;white-space:nowrap;text-shadow:0 1px 4px #000}
+.passline{position:absolute;height:3px;background:repeating-linear-gradient(90deg,#fff 0 10px,transparent 10px 18px);transform-origin:0 50%;opacity:.85}
+.range{width:100%;margin-top:16px;accent-color:var(--accDeep);height:36px}
+.call{margin-top:8px;font-family:var(--fd);font-weight:700;font-size:clamp(22px,3vw,32px);text-transform:uppercase;min-height:1.3em}
+.call.bad{color:#d92d2d}.call.ok{color:var(--accDeep)}
+
+/* running, history */
+.run{background-image:url(img/fb-night-game.webp)}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:30px}
+.trio .pic{aspect-ratio:3/4}
+@media(max-width:700px){.trio{grid-template-columns:1fr 1fr}.trio .pic:last-child{grid-column:span 2;aspect-ratio:16/9}}
+.hist{background-image:url(img/fb-crowd.webp);--shade:linear-gradient(90deg,rgba(3,6,4,.94),rgba(3,6,4,.72) 60%,rgba(3,6,4,.4))}
+.years{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:26px}
+@media(max-width:760px){.years{grid-template-columns:1fr}}
+.year{border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(5,10,7,.55);backdrop-filter:blur(4px)}
+.year b{display:block;font-family:var(--fb);font-weight:800;font-size:38px;line-height:1;color:var(--acc)}
+.year p{margin:.5em 0 0;font-size:15px}
+
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+@media(max-width:640px){.cards{grid-template-columns:1fr}}
+.card{position:relative;display:block;aspect-ratio:16/9;border-radius:20px;overflow:hidden;text-decoration:none}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover img{transform:scale(1.04)}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent 55%)}
+.card span{position:absolute;z-index:1;left:18px;bottom:14px;font-family:var(--fd);font-weight:700;text-transform:uppercase;font-size:28px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+@media(prefers-reduced-motion:reduce){.hero .ballwrap model-viewer{animation:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Разделы главы">
+  <div class="wrap">
+    <a class="home" href="index.html">← Главы</a>
+    <div class="links">
+      <a href="#pole">Поле</a>
+      <a href="#myach">Мяч</a>
+      <a href="#penalti">Пенальти</a>
+      <a href="#taktika">Тактика</a>
+      <a href="#ofsaid">Офсайд</a>
+      <a href="#beg">Бег</a>
+      <a href="#istoriya">История</a>
+      <a href="#test">Тест</a>
+    </div>
+    <div class="meter" id="meter" title="Время матча">0′</div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Живая энциклопедия · Глава 3</p>
+    <h1>Футбол</h1>
+    <p>Самая популярная игра на планете: по подсчётам ФИФА, в неё играют больше 250 миллионов человек. Листай вниз, и матч начнётся. Вся страница — это 90 минут игры.</p>
+    <div class="row">
+      <a class="btn" href="#pole">Свисток! ↓</a>
+      <a class="btn ghost" href="#penalti">Сразу к пенальти</a>
+    </div>
+  </div>
+  <div class="ballwrap">
+    <model-viewer src="models/ball.glb" poster="img/poster/ball.webp" alt="3D-модель футбольного мяча" environment-image="neutral" tone-mapping="aces" exposure="1.15" camera-controls disable-zoom auto-rotate max-camera-orbit="auto auto 400%" interaction-prompt="none" touch-action="pan-y" shadow-intensity="0" camera-orbit="0deg 75deg 150%"></model-viewer>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 240 90 480 0 720 34 S 1200 80 1440 30 V90 H0Z"/></svg>
+</header>
+
+<section class="band paper" id="pole" data-min="5">
+  <div class="wrap split" style="align-items:start">
+    <div>
+      <p class="kicker" style="color:var(--accDeep)">5′</p>
+      <h2>Какого размера поле?</h2>
+      <p>Для больших международных матчей поле делают длиной от 100 до 110 метров и шириной от 64 до 75 метров. Чаще всего это 105 на 68 метров: это больше 7 000 квадратных метров травы.</p>
+      <p>Нажми и узнай, что значит каждая линия:</p>
+      <div class="chips" id="zchips"></div>
+      <div class="zoneInfo" id="zinfo" aria-live="polite"></div>
+    </div>
+    <div>
+      <div class="pitch" id="pitch1" role="img" aria-label="Настоящее футбольное поле, вид сверху">
+        <div class="z" data-z="field" style="left:1.7%;top:2.9%;width:96%;height:94.2%"></div>
+        <div class="z" data-z="box" style="left:1.7%;top:20.2%;width:15.8%;height:59.1%"></div>
+        <div class="z" data-z="box" style="left:81.9%;top:20%;width:15.7%;height:59.3%"></div>
+        <div class="z" data-z="six" style="left:1.7%;top:36.3%;width:5.2%;height:27%"></div>
+        <div class="z" data-z="six" style="left:92.4%;top:36.1%;width:5.2%;height:26.9%"></div>
+        <div class="z spot" data-z="spot" style="left:12.3%;top:49.8%"></div>
+        <div class="z spot" data-z="spot" style="left:87.1%;top:49.7%"></div>
+        <div class="z round" data-z="circle" style="left:41.07%;top:36.25%;width:17.25%;height:26.5%"></div>
+        <div class="z" data-z="goal" style="left:0;top:44%;width:2.2%;height:11.3%"></div>
+        <div class="z" data-z="goal" style="left:97.4%;top:44.5%;width:2.4%;height:11.2%"></div>
+      </div>
+      <span class="drag">Настоящее поле, снятое с дрона</span>
+    </div>
+  </div>
+</section>
+
+<section class="band ballband" id="myach" data-min="15">
+  <div class="wrap split">
+    <div>
+      <p class="kicker">15′</p>
+      <h2>Всё про мяч</h2>
+      <p>По правилам мяч должен быть круглым, обхватом 68–70 сантиметров и весом 410–450 граммов. Раньше мячи шили из кожи, и в дождь они сильно тяжелели. Сейчас их делают из синтетики, которая не впитывает воду.</p>
+      <div class="facts">
+        <div class="fact"><b>68–70 см</b><span>обхват мяча</span></div>
+        <div class="fact"><b>410–450 г</b><span>вес мяча</span></div>
+        <div class="fact"><b>11</b><span>игроков в команде на поле</span></div>
+      </div>
+      <div class="ballpics">
+        <figure class="pic"><img src="img/fb-ball-grass.webp" alt="Футбольный мяч на траве" loading="lazy"><figcaption>Мяч на газоне</figcaption></figure>
+        <figure class="pic"><img src="img/fb-foot-ball.webp" alt="Бутса на мяче" loading="lazy" style="object-position:50% 70%"><figcaption>Бутса и мяч</figcaption></figure>
+      </div>
+    </div>
+    <div>
+      <model-viewer class="mv" src="models/ball.glb" poster="img/poster/ball.webp" alt="3D-модель футбольного мяча" loading="lazy" camera-controls disable-zoom auto-rotate max-camera-orbit="auto auto 400%" interaction-prompt="none" touch-action="pan-y" shadow-intensity="0" camera-orbit="0deg 75deg 135%"></model-viewer>
+      <span class="drag">Покрути мяч: посмотри, как сшиты панели</span>
+    </div>
+  </div>
+</section>
+
+<section class="band pen" id="penalti" data-min="30">
+  <div class="wrap split">
+    <div>
+      <p class="kicker">30′</p>
+      <h2>Пенальти: 11 метров</h2>
+      <p>Если защитник нарушит правила в своей штрафной площади, назначают пенальти. Мяч ставят на точку в 11 метрах от ворот. Сильно пробитый мяч долетает до ворот примерно за <span class="hl">0,4 секунды</span>.</p>
+      <p>Встань в ворота! Нажми «Удар», а потом жми на левую или правую половину картинки, куда летит мяч. Можно угадать заранее, как настоящие вратари.</p>
+      <button class="btn" id="kick">Удар!</button>
+      <div class="scoreline"><span><b id="saves">0</b>отбито</span><span><b id="goals">0</b>голов</span></div>
+    </div>
+    <div>
+      <div class="goal" id="goal">
+        <img class="flyball" id="fly" src="img/poster/ball.webp" alt="">
+        <button class="glove l" data-s="l">Прыгнуть влево</button>
+        <button class="glove r" data-s="r">Прыгнуть вправо</button>
+        <div class="msg" id="gmsg" aria-live="assertive"></div>
+        <div class="hint" id="ghint">← влево · вправо →</div>
+      </div>
+      <figure class="pic" style="margin-top:14px;aspect-ratio:16/7"><img src="img/fb-goalie.webp" alt="Вратарь в прыжке за мячом" loading="lazy" style="object-position:50% 40%"><figcaption>У вратаря нет времени просто среагировать, поэтому он заранее угадывает, куда пробьют</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="band photo-bg" style="background-image:url(img/fb-stadium-roof.webp);--shade:linear-gradient(0deg,rgba(5,10,7,.85),rgba(5,10,7,.35))" data-min="45">
+  <div class="wrap" style="padding-block:clamp(40px,8vw,110px)">
+    <p class="kicker">45′ · перерыв 15 минут</p>
+    <h2 style="max-width:16ch">Команды уходят в раздевалку</h2>
+    <p>Тренер меняет план на второй тайм. На стадионе зажигаются прожекторы.</p>
+  </div>
+</section>
+
+<section class="band paper" id="taktika" data-min="55">
+  <div class="wrap split">
+    <div>
+      <p class="kicker" style="color:var(--accDeep)">55′</p>
+      <h2>Схемы и тактика</h2>
+      <p>Тренер решает, сколько игроков будут защищаться, сколько играть в середине поля и сколько атаковать. Такую расстановку записывают цифрами, например <span class="hl">4-4-2</span>: четыре защитника, четыре полузащитника и два нападающих. Вратаря не считают.</p>
+      <p>Переставь команду:</p>
+      <div class="chips" id="fchips">
+        <button class="chip" aria-pressed="true" data-f="442">4-4-2</button>
+        <button class="chip" aria-pressed="false" data-f="433">4-3-3</button>
+        <button class="chip" aria-pressed="false" data-f="352">3-5-2</button>
+      </div>
+      <p id="fnote" style="font-size:15px;color:#43503f" aria-live="polite"></p>
+    </div>
+    <div>
+      <div class="pitch" id="pitch2" role="img" aria-label="Расстановка команды на поле"></div>
+      <div class="legend"><span><i style="background:var(--acc)"></i>вратарь</span><span><i style="background:#fff;border:1px solid #999"></i>полевые игроки</span><span>команда атакует вправо →</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band paper" id="ofsaid" data-min="68" style="padding-top:0">
+  <div class="wrap split">
+    <div>
+      <p class="kicker" style="color:var(--accDeep)">68′</p>
+      <h2>Что такое офсайд?</h2>
+      <p>Офсайд — это «вне игры». Нападающий не может стоять ближе к воротам соперника, чем последний защитник, в тот момент, когда партнёр отдаёт ему пас. Иначе он просто ждал бы мяч у ворот всю игру.</p>
+      <label for="off" style="font-weight:700">Двигай нападающего и смотри, что скажет судья:</label>
+      <input class="range" id="off" type="range" min="56" max="92" value="66" step="0.5">
+      <div class="call" id="call" aria-live="polite"></div>
+    </div>
+    <div>
+      <div class="pitch" id="pitch3" role="img" aria-label="Положение нападающего и защитников"></div>
+      <div class="legend"><span><i style="background:#ffd23f"></i>нападающий</span><span><i style="background:#fff;border:1px solid #999"></i>партнёр с мячом</span><span><i style="background:#ff4d4d"></i>соперники</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band photo-bg run" id="beg" data-min="80">
+  <div class="wrap">
+    <p class="kicker">80′</p>
+    <h2>Сколько бегает футболист?</h2>
+    <p>За один матч полевой игрок пробегает 10–12 километров. Это как дойти пешком через полгорода, только бегом, с рывками, прыжками и ударами по мячу.</p>
+    <div class="facts" style="max-width:720px">
+      <div class="fact"><b>10–12 км</b><span>пробегает игрок за матч</span></div>
+      <div class="fact"><b>2 × 45 мин</b><span>два тайма</span></div>
+      <div class="fact"><b>15 мин</b><span>перерыв между таймами</span></div>
+    </div>
+    <div class="trio">
+      <figure class="pic"><img src="img/fb-boy-kick.webp" alt="Мальчик бьёт по мячу" loading="lazy"><figcaption>Удар по воротам</figcaption></figure>
+      <figure class="pic"><img src="img/fb-kids-goal.webp" alt="Дети борются за мяч у ворот" loading="lazy"><figcaption>Борьба у ворот</figcaption></figure>
+      <figure class="pic"><img src="img/fb-kids-team.webp" alt="Детская команда с тренером" loading="lazy"><figcaption>Команда слушает тренера</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="band photo-bg hist" id="istoriya" data-min="88">
+  <div class="wrap">
+    <p class="kicker">88′</p>
+    <h2>Как всё начиналось</h2>
+    <p>В мяч ногами играли ещё в древности, но общие правила футбола записали только в XIX веке. Чемпионат мира проходит раз в четыре года.</p>
+    <div class="years">
+      <div class="year"><b>1863</b><p>В Англии записали общие правила футбола.</p></div>
+      <div class="year"><b>1930</b><p>Первый чемпионат мира в Уругвае: 13 сборных, а победили сами хозяева.</p></div>
+      <div class="year"><b>2026</b><p>На чемпионате мира впервые сыграли 48 сборных.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band paper" id="test" data-min="90">
+  <div class="wrap">
+    <p class="kicker" style="color:var(--accDeep)">90′ · финальный свисток</p>
+    <h2>Проверь себя</h2>
+    <div id="quiz"></div>
+    <div id="score" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="band dark">
+  <div class="wrap">
+    <h2>Другие главы</h2>
+    <div class="cards">
+      <a class="card" href="kity.html"><img src="img/oc-hero.webp" alt="" loading="lazy"><span>Киты</span></a>
+      <a class="card" href="kosmos.html"><img src="img/hero-earth.webp" alt="" loading="lazy"><span>Космос</span></a>
+    </div>
+    <div class="next"><a class="btn ghost" href="#" onclick="scrollTo({top:0});return false">↑ К началу матча</a></div>
+  </div>
+</section>
+
+<footer>
+  <p>Живая энциклопедия · Глава «Футбол»</p>
+  <p>Фото: Unsplash. 3D-модель мяча: библиотека Microsoft Office.</p>
+</footer>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+
+/* match clock */
+const meter=$('#meter'),mins=$$('[data-min]'),links=$$('.links a');
+function onScroll(){
+  const y=innerHeight*.4;let m=0,on=null;
+  for(const el of mins){if(el.getBoundingClientRect().top<y)m=+el.dataset.min}
+  for(const a of links){const t=document.querySelector(a.getAttribute('href'));if(t&&t.getBoundingClientRect().top<y)on=a}
+  meter.textContent=m+'′';links.forEach(a=>a.classList.toggle('on',a===on));
+}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* pitch zones */
+const Z={
+ field:['Поле','Обычно 105 × 68 метров. Линии по краям называются боковыми и лицевыми.'],
+ box:['Штрафная площадь','Прямоугольник 16,5 метра от ворот. Здесь вратарь может брать мяч руками, а нарушение защитника — это пенальти.'],
+ six:['Вратарская площадь','5,5 метра от ворот. Отсюда вратарь выбивает мяч от ворот.'],
+ spot:['Точка пенальти','Ровно 11 метров от линии ворот.'],
+ circle:['Центральный круг','Радиус 9,15 метра. С центра поля начинают игру и продолжают после каждого гола.'],
+ goal:['Ворота','Ширина 7,32 метра, высота 2,44 метра. Мяч должен целиком пересечь линию ворот, чтобы засчитали гол.']
+};
+const zc=$('#zchips');
+Object.entries(Z).forEach(([k,[n]],i)=>{const b=document.createElement('button');b.className='chip';b.textContent=n.replace(' площадь','');b.setAttribute('aria-pressed','false');b.onclick=()=>showZ(k);b.dataset.k=k;zc.append(b)});
+function showZ(k){
+  $$('#zchips .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
+  $$('#pitch1 .z').forEach(z=>z.classList.toggle('on',z.dataset.z===k));
+  $('#zinfo').innerHTML=`<b>${Z[k][0]}</b>${Z[k][1]}`;
+}
+showZ('box');
+
+/* tactics */
+const F={
+ '442':{d:[18,39,61,82],m:[18,39,61,82],a:[38,62],t:'Две линии по четыре: надёжно и в защите, и в середине поля.'},
+ '433':{d:[18,39,61,82],m:[28,50,72],a:[20,50,80],t:'Три нападающих: команда много атакует, зато в середине поля меньше игроков.'},
+ '352':{d:[28,50,72],m:[10,30,50,70,90],a:[38,62],t:'Пять полузащитников: команда старается владеть мячом в центре поля.'}
+};
+const p2=$('#pitch2'),dots=[];
+for(let i=0;i<11;i++){const d=document.createElement('div');d.className='dot'+(i?'':' gk');d.textContent=i?i+1:1;p2.append(d);dots.push(d)}
+function form(k){
+  const f=F[k],pos=[[6,50]];
+  f.d.forEach(y=>pos.push([21,y]));f.m.forEach(y=>pos.push([42,y]));f.a.forEach(y=>pos.push([62,y]));
+  dots.forEach((d,i)=>{d.style.left=pos[i][0]+'%';d.style.top=pos[i][1]+'%'});
+  $$('#fchips .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===k));
+  $('#fnote').textContent=f.t;
+}
+$$('#fchips .chip').forEach(b=>b.onclick=()=>form(b.dataset.f));form('442');
+
+/* offside */
+const p3=$('#pitch3');
+const LAST=76;
+p3.innerHTML=`<div class="offline" style="left:${LAST}%"><span>линия офсайда</span></div><div class="passline" id="pl"></div>`;
+const mk=(c,x,y,t='')=>{const d=document.createElement('div');d.className='dot '+c;d.style.left=x+'%';d.style.top=y+'%';d.textContent=t;p3.append(d);return d};
+mk('red',96,50);mk('red',LAST,62);mk('red',70,18);mk('red',66,75);
+const passer=mk('',48,64);const me=mk('me',66,34);
+function off(){
+  const x=+$('#off').value;me.style.left=x+'%';
+  const r=p3.getBoundingClientRect(),ax=48/100*r.width,ay=.64*r.height,bx=x/100*r.width,by=.34*r.height;
+  const pl=$('#pl');pl.style.left=ax+'px';pl.style.top=ay+'px';pl.style.width=Math.hypot(bx-ax,by-ay)+'px';pl.style.transform=`rotate(${Math.atan2(by-ay,bx-ax)}rad)`;
+  const c=$('#call');
+  if(x>LAST+.5){c.textContent='Офсайд! Судья поднял флажок';c.className='call bad'}
+  else if(x>=LAST-.5){c.textContent='Вровень с защитником — играем!';c.className='call ok'}
+  else{c.textContent='Всё честно, играем!';c.className='call ok'}
+}
+$('#off').oninput=off;addEventListener('resize',off);off();
+
+/* penalty game */
+const fly=$('#fly'),gmsg=$('#gmsg');let state='idle',side=null,guess=null,t0=0,sv=0,gl=0,tm;
+function reset(){fly.style.transition='none';fly.style.left='50%';fly.style.top='76%';fly.style.width='7%';$$('.glove').forEach(g=>g.classList.remove('hit'))}
+$('#kick').onclick=()=>{
+  if(state==='wait'||state==='fly')return;
+  reset();guess=null;state='wait';gmsg.textContent='Приготовься...';$('#kick').disabled=true;
+  side=Math.random()<.5?'l':'r';
+  tm=setTimeout(()=>{
+    state='fly';gmsg.textContent='';t0=performance.now();
+    void fly.offsetWidth;fly.style.transition='left .4s linear,top .4s linear,width .4s ease-in';
+    fly.style.left=side==='l'?'22%':'78%';fly.style.top=(30+Math.random()*25)+'%';fly.style.width='26%';
+    tm=setTimeout(finish,420);
+  },900+Math.random()*1600);
+};
+function finish(){
+  state='idle';$('#kick').disabled=false;$('#kick').textContent='Ещё удар!';
+  if(guess===side){sv++;gmsg.textContent='Отбил!'}else{gl++;gmsg.textContent=guess?'Гол! Не угадал':'Гол! Не успел'}
+  $('#saves').textContent=sv;$('#goals').textContent=gl;
+  if(sv+gl===3)$('#ghint').textContent='Заметил? За 0,4 секунды почти невозможно успеть, поэтому вратари угадывают.';
+}
+$$('.glove').forEach(g=>g.onclick=()=>{
+  if(state==='idle'||guess)return;guess=g.dataset.s;g.classList.add('hit');
+});
+
+/* quiz */
+const Q=[
+ ['Сколько игроков одной команды выходит на поле?',['10','11','12'],1],
+ ['С какого расстояния бьют пенальти?',['11 метров','16,5 метра','9,15 метра'],0],
+ ['Когда прошёл первый чемпионат мира?',['В 1863 году','В 1930 году','В 1966 году'],1],
+ ['Что значит схема 4-3-3?',['4 вратаря, 3 защитника, 3 нападающих','4 защитника, 3 полузащитника, 3 нападающих','4 тайма по 33 минуты'],1],
+ ['Сколько пробегает полевой игрок за матч?',['1–2 км','10–12 км','50 км'],1]
+];
+let score=0,done=0;
+Q.forEach(([q,o,r])=>{
+  const d=document.createElement('div');d.className='q';d.innerHTML=`<p>${q}</p><div class="opts"></div>`;
+  o.forEach((t,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=t;b.onclick=()=>{
+    if(d.dataset.done)return;d.dataset.done=1;b.classList.add(i===r?'right':'wrong');d.querySelectorAll('.answer')[r].classList.add('right');
+    if(i===r)score++;done++;if(done===Q.length)$('#score').textContent=`Счёт: ${score} из ${Q.length}. ${score===Q.length?'Чистая победа!':'Пролистай главу ещё раз и сыграй снова.'}`};
+    d.querySelector('.opts').append(b)});
+  $('#quiz').append(d);
+});
+</script>
+<script src="js/life.js"></script>
+</body>
+</html>

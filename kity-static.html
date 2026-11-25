@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Киты (статичная версия) — Живая энциклопедия</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="css/chapter.css">
+<style>
+/* Control condition for the study: the same text, photos and design as kity.html,
+   but nothing moves and nothing can be clicked, dragged or played. No video, no 3D, no sound, no quiz. */
+:root{color-scheme:dark;--bg:#021019;--ink:#f1f8fb;--dim:#a9c4cf;--acc:#35d6e6;--accInk:#022029;--accDeep:#0a7590;--line:rgba(255,255,255,.26);--paper:#f7fbfc;--paperInk:#0b1a22;
+--fd:"Unbounded","Arial Black",system-ui,sans-serif;--fb:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif}
+.nav .static{font-size:13px;color:var(--dim);margin-left:auto}
+.hero{background-image:url(img/oc-hero.webp);background-position:60% center}
+.still{display:block;width:100%;height:clamp(260px,34vw,440px);object-fit:contain}
+.zone{min-height:auto}
+.zone .tag{display:inline-block;font-family:var(--fd);font-weight:700;color:var(--acc);font-size:14px;letter-spacing:.06em;margin-bottom:10px}
+.z-sun{background-image:url(img/oc-reef.webp)}
+.z-twi{background-image:url(img/oc-twilight.webp)}
+.z-mid{background:#01070c}.z-mid::before{display:none}
+.songs{background-image:url(vid/whale-rays.webp);--shade:linear-gradient(90deg,rgba(2,12,22,.92),rgba(2,12,22,.6) 55%,rgba(2,12,22,.15))}
+.species{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:26px}
+.sp{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:20px;overflow:hidden}
+.sp img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.sp div{padding:16px 18px 20px}
+.sp h3{font-family:var(--fd);font-weight:700;font-size:20px;margin:0 0 6px}
+.sp p{font-size:14.5px;color:#cfe0e6;margin:0 0 10px}
+.sp ul{list-style:none;padding:0;margin:0;font-size:14px;color:var(--dim)}
+.sp li b{color:var(--ink)}
+.blow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:24px}
+.blow .pic{aspect-ratio:4/3}
+@media(max-width:700px){.blow{grid-template-columns:1fr}}
+.record{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:center;margin-top:clamp(40px,6vw,80px)}
+@media(max-width:820px){.record{grid-template-columns:1fr}}
+.record .pic{aspect-ratio:3/2}
+.floor{background:linear-gradient(180deg,#01070c,#0a0f14)}
+.critters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+@media(max-width:700px){.critters{grid-template-columns:1fr}}
+.critters figure{margin:0;text-align:center}
+.critters img{width:100%;height:200px;object-fit:contain}
+.critters figcaption{font-size:14px;color:var(--dim)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:34px}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{border:1px solid var(--line);border-radius:18px;padding:18px}
+.step b{display:block;font-family:var(--fd);color:var(--acc);font-size:28px;line-height:1}
+.step h3{margin:.4em 0 .2em}
+.step p{font-size:15px;color:var(--dim);margin:0}
+.gallery2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+.gallery2 .pic{aspect-ratio:4/3}
+@media(max-width:700px){.gallery2{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Глава">
+  <div class="wrap">
+    <a class="home" href="index.html">← Главы</a>
+    <span class="static">Глава «Киты» · статичная версия</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Живая энциклопедия · Глава 1</p>
+    <h1>Киты</h1>
+    <p>Самые большие животные, которые когда-либо жили на Земле. Листай вниз: мы опустимся от поверхности до самого дна океана, на 4 000 метров.</p>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 240 90 480 0 720 34 S 1200 80 1440 30 V90 H0Z"/></svg>
+</header>
+
+<section class="band paper">
+  <div class="wrap split">
+    <div>
+      <p class="kicker" style="color:var(--accDeep)">Кто такие киты</p>
+      <h2>Кит — это не рыба</h2>
+      <p>Кит живёт в воде, у него плавники и хвост, но он не рыба. Киты — млекопитающие, как собаки, лошади и мы с тобой.</p>
+      <div class="facts">
+        <div class="fact"><b>Лёгкие</b><span>киты дышат воздухом, как мы</span></div>
+        <div class="fact"><b>Молоко</b><span>мама кормит детёныша молоком</span></div>
+        <div class="fact"><b>Тёплая кровь</b><span>под кожей — толстый слой жира</span></div>
+      </div>
+    </div>
+    <img class="still" src="img/poster/whale.webp" alt="Горбатый кит">
+  </div>
+</section>
+
+<section class="band dark">
+  <div class="wrap">
+    <p class="kicker">Знакомься</p>
+    <h2>Какие бывают киты</h2>
+    <p>Китов больше 90 видов. Одни огромные и едят крошечных рачков, другие поменьше и охотятся стаями. Дельфины — тоже киты, только маленькие. Для сравнения: школьный автобус длиной около 12 метров.</p>
+    <div class="species">
+      <article class="sp"><img src="img/noaa-blue-whale.webp" alt="Синий кит"><div><h3>Синий кит</h3><p>Самое большое животное в истории Земли. Его сердце весит около 180 кг, а язык тяжёлый, как целый слон.</p><ul><li><b>до 30 м</b> — примерно 2,5 школьных автобуса</li><li><b>до 150 т</b></li><li>ест криль — 3–4 т в день</li></ul></div></article>
+      <article class="sp"><img src="img/oc-breach.webp" alt="Горбатый кит"><div><h3>Горбатый кит</h3><p>Самый известный певец океана и прыгун: выпрыгивает из воды почти целиком. Каждый год проплывает тысячи километров.</p><ul><li><b>до 16 м</b> — примерно 1,3 автобуса</li><li><b>около 30 т</b></li><li>ест криль и мелкую рыбу</li></ul></div></article>
+      <article class="sp"><img src="img/noaa-sperm-whale.webp" alt="Кашалоты"><div><h3>Кашалот</h3><p>Чемпион среди ныряльщиков-охотников. У него самый большой мозг из всех животных на планете.</p><ul><li><b>до 18 м</b> — примерно 1,5 автобуса</li><li><b>до 45 т</b></li><li>ест кальмаров</li></ul></div></article>
+      <article class="sp"><img src="img/noaa-killer-whale.webp" alt="Касатки"><div><h3>Касатка</h3><p>Касатка — самый большой дельфин. Охотится семьёй, и у каждой семьи свой «язык» из щелчков и свиста.</p><ul><li><b>до 9 м</b> — как школьный автобус</li><li><b>до 6 т</b></li><li>ест рыбу и тюленей</li></ul></div></article>
+      <article class="sp"><img src="img/noaa-gray-whale.webp" alt="Серый кит"><div><h3>Серый кит</h3><p>Великий путешественник: за год проплывает туда и обратно около 16 000 км, от холодных морей до тёплых лагун.</p><ul><li><b>до 15 м</b> — примерно 1,3 автобуса</li><li><b>около 35 т</b></li><li>ест рачков со дна</li></ul></div></article>
+      <article class="sp"><img src="img/noaa-cuviers-beaked-whale.webp" alt="Клюворыл Кювье"><div><h3>Клюворыл Кювье</h3><p>Самый глубоко ныряющий кит: почти 3 км вниз и почти 4 часа без вдоха.</p><ul><li><b>до 7 м</b></li><li><b>до 3 т</b></li><li>ест кальмаров и рыбу</li></ul></div></article>
+      <article class="sp"><img src="img/noaa-common-bottlenose-dolphin.webp" alt="Афалина"><div><h3>Афалина</h3><p>Дельфин — маленький зубатый кит. Афалины узнают друг друга по «именам»: у каждой свой свист.</p><ul><li><b>до 4 м</b> — как два взрослых человека</li><li><b>до 650 кг</b></li><li>ест рыбу</li></ul></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="band photo-bg songs">
+  <div class="wrap">
+    <div style="max-width:560px">
+      <p class="kicker">−60 м</p>
+      <h2>Киты поют</h2>
+      <p>Самцы горбатых китов исполняют длинные песни. Одна песня длится 10–20 минут, и кит может повторять её часами. Все самцы в одном районе поют одну и ту же песню, и она понемногу меняется из года в год.</p>
+      <p>Под водой звук бежит примерно в 4 раза быстрее, чем в воздухе, поэтому голоса китов разносятся очень далеко.</p>
+      <div class="facts" style="max-width:420px">
+        <div class="fact"><b>1 500 м/с</b><span>скорость звука в воде</span></div>
+        <div class="fact"><b>340 м/с</b><span>скорость звука в воздухе</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band paper">
+  <div class="wrap">
+    <p class="kicker" style="color:var(--accDeep)">Вдох на поверхности</p>
+    <h2>Как дышит кит</h2>
+    <p>Чтобы вдохнуть, кит поднимается к поверхности и выдыхает через <span class="hl">дыхало</span> — ноздрю на макушке. Тёплый влажный воздух превращается в облако брызг: это и есть фонтан. У синего кита он взлетает на высоту до 9 метров, выше трёхэтажного дома.</p>
+    <p>Перед нырком кит поднимает хвост над водой. По рисунку на хвосте учёные узнают каждого горбача, как нас по отпечаткам пальцев. Кашалот обычно остаётся под водой 45–60 минут, не делая ни одного вдоха.</p>
+    <div class="blow">
+      <figure class="pic"><img src="img/noaa-blue-whale.webp" alt="Синий кит у поверхности, вид сверху" loading="lazy"><figcaption>Синий кит выдыхает: виден фонтан</figcaption></figure>
+      <figure class="pic"><img src="img/oc-tail.webp" alt="Хвост горбатого кита над водой" loading="lazy"><figcaption>Хвост перед нырком</figcaption></figure>
+      <figure class="pic"><img src="img/oc-tail2.webp" alt="Кит бьёт хвостом по воде" loading="lazy"><figcaption>Удар хвостом</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="band photo-bg zone z-sun">
+  <div class="wrap split">
+    <div>
+      <span class="tag">0–200 м · СОЛНЕЧНАЯ ЗОНА</span>
+      <h2>Здесь светло</h2>
+      <p>Солнечный свет пробивается сквозь воду, и здесь живёт больше всего рыб, водорослей и кораллов. Рыбы дышат жабрами и берут кислород прямо из воды. Киту так нельзя: ему нужен воздух, поэтому он всё время возвращается наверх.</p>
+    </div>
+    <img class="still" src="img/poster/fishschool.webp" alt="Стая рыб" loading="lazy">
+  </div>
+</section>
+
+<section class="band photo-bg zone z-twi">
+  <div class="wrap split">
+    <div>
+      <span class="tag">200–1 000 м · СУМЕРЕЧНАЯ ЗОНА</span>
+      <h2>Почти темно</h2>
+      <p>Сюда доходит совсем немного солнечного света, всё кажется тёмно-синим. Водоросли тут уже не растут. Зато медленно плавают медузы, а многие животные днём прячутся здесь, а ночью поднимаются наверх за едой.</p>
+    </div>
+    <img class="still" src="img/poster/jelly.webp" alt="Медуза" loading="lazy">
+  </div>
+</section>
+
+<section class="band photo-bg zone z-mid">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <span class="tag">1 000–4 000 м · ПОЛУНОЧНАЯ ЗОНА</span>
+        <h2>Вечная ночь</h2>
+        <p>Здесь всегда темно и холодно. Свет дают только сами животные, например рыба-удильщик со светящейся «удочкой» над головой.</p>
+        <p>Сюда ныряет <span class="hl">кашалот</span>: на 1–2 километра, чтобы охотиться на кальмаров. В полной темноте он находит добычу щелчками — издаёт звук и слушает, как тот отражается от предметов. Это называется эхолокация.</p>
+      </div>
+      <img class="still" src="img/poster/angler.webp" alt="Рыба-удильщик" loading="lazy">
+    </div>
+    <div class="record">
+      <figure class="pic"><img src="img/noaa-cuviers-beaked-whale.webp" alt="Клюворыл Кювье у поверхности" loading="lazy"><figcaption>Клюворыл Кювье · Фото: NOAA Fisheries</figcaption></figure>
+      <div>
+        <p class="kicker">Рекорд: почти 3 километра</p>
+        <p>Глубже всех известных учёным китов ныряет клюворыл Кювье. В 2014 году учёные записали его погружение на 2 992 метра. А самое долгое погружение этого кита длилось 222 минуты, почти 4 часа без воздуха.</p>
+        <div class="facts">
+          <div class="fact"><b>2 992 м</b><span>рекорд глубины</span></div>
+          <div class="fact"><b>222 мин</b><span>рекорд без вдоха</span></div>
+          <div class="fact"><b>~300 атм</b><span>давление воды на такой глубине</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band floor">
+  <div class="wrap">
+    <p class="kicker">−4 000 м · дно</p>
+    <h2>Что происходит, когда кит умирает</h2>
+    <p>Тело огромного кита медленно опускается на дно. Учёные называют это «падением кита». На дне, где еды почти нет, оно становится праздником для сотен видов животных и кормит их десятилетиями.</p>
+    <div class="critters">
+      <figure><img src="img/poster/crab.webp" alt="Рак-отшельник" loading="lazy"><figcaption>Рак-отшельник прячет мягкое брюшко в чужой раковине.</figcaption></figure>
+      <figure><img src="img/poster/urchin.webp" alt="Морской ёж" loading="lazy"><figcaption>Морской ёж ползает на сотнях крошечных ножек-присосок.</figcaption></figure>
+      <figure><img src="img/poster/octopus.webp" alt="Осьминог" loading="lazy"><figcaption>У осьминога три сердца и голубая кровь.</figcaption></figure>
+    </div>
+    <div class="steps">
+      <div class="step"><b>1</b><h3>Первые месяцы</h3><p>Приплывают акулы, миксины и крабы и съедают мягкие ткани.</p></div>
+      <div class="step"><b>2</b><h3>Несколько лет</h3><p>Черви, улитки и рачки селятся вокруг костей.</p></div>
+      <div class="step"><b>3</b><h3>Десятки лет</h3><p>Особые бактерии питаются жиром внутри костей, а ими питаются другие животные.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band dark" style="background:linear-gradient(180deg,#0a0f14,#021019)">
+  <div class="wrap">
+    <h2>Галерея</h2>
+    <div class="gallery2">
+      <figure class="pic"><img src="img/oc-breach.webp" alt="Горбатый кит выпрыгивает из воды" loading="lazy"><figcaption>Горбач выпрыгивает из воды</figcaption></figure>
+      <figure class="pic"><img src="img/oc-humpback-blue.webp" alt="Горбатый кит под водой" loading="lazy"><figcaption>Горбатый кит под водой</figcaption></figure>
+      <figure class="pic"><img src="img/oc-dolphins.webp" alt="Дельфины под водой" loading="lazy"><figcaption>Дельфины — маленькие киты</figcaption></figure>
+      <figure class="pic"><img src="img/oc-orcas-top.webp" alt="Касатки сверху" loading="lazy" style="object-position:50% 30%"><figcaption>Касатки, вид сверху</figcaption></figure>
+      <figure class="pic"><img src="img/noaa-humpback-whale.webp" alt="Горбатый кит в прыжке" loading="lazy"><figcaption>Горбатый кит · NOAA</figcaption></figure>
+      <figure class="pic"><img src="img/oc-tail.webp" alt="Хвост кита" loading="lazy"><figcaption>Хвост кита</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Живая энциклопедия · Глава «Киты» · статичная версия для исследования</p>
+  <p>Фото: NOAA Fisheries (общественное достояние), Unsplash, кадры видео Pexels. Изображения моделей: библиотека Microsoft Office.</p>
+</footer>
+</body>
+</html>

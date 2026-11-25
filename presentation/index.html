@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Living Encyclopedia — Diploma Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+<style>
+/* DESIGN: the Living Encyclopedia look — night navy and warm paper, aqua / coral / lime chapter colours, Unbounded + Montserrat,
+   full-screen slides that come alive on arrival, real footage and live 3D.
+   STRUCTURE: the academic order of a CM diploma presentation — overview, then numbered sections 01–16. */
+:root{--night:#060912;--night2:#0c1121;--paper:#f3efe6;--ink:#f3f5fb;--dim:#a9b2c8;--aqua:#35d6e6;--coral:#ff6a4d;--lime:#b8f13c;--gold:#e8c48a;--violet:#b892ff;
+--fd:"Unbounded","Arial Black",system-ui,sans-serif;--fb:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;--ease:cubic-bezier(.2,.8,.2,1);--mx:0;--my:0}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;height:100%;background:var(--night);color:var(--ink);font:18px/1.55 var(--fb);overflow:hidden}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--aqua);outline-offset:3px}
+model-viewer{--poster-color:transparent;background:transparent}
+.deck{position:fixed;inset:0;background:#000}
+.slide{position:absolute;inset:0;display:flex;align-items:center;visibility:hidden;overflow:hidden;background:var(--night);z-index:0}
+.slide.on{visibility:visible;z-index:3;animation:iris 1.05s var(--ease) both}
+.slide.prev{visibility:visible;z-index:2}
+@keyframes iris{from{clip-path:circle(0% at var(--ox,50%) var(--oy,50%))}to{clip-path:circle(150% at var(--ox,50%) var(--oy,50%))}}
+.slide>.in{position:relative;z-index:4;width:100%;max-width:1380px;margin:0 auto;padding:clamp(66px,9vh,104px) clamp(20px,5vw,72px) clamp(84px,11vh,112px);max-height:100%;overflow-y:auto;scrollbar-width:none}
+.slide>.in::-webkit-scrollbar{display:none}
+.bg{position:absolute;inset:-3%;z-index:0;transform:translate(calc(var(--mx)*-14px),calc(var(--my)*-10px));transition:transform .6s ease-out}
+.bg img,.bg video{width:100%;height:100%;object-fit:cover}
+.slide.on .bg.kb img,.slide.on .bg.kb video{animation:kb 20s ease-out both}
+@keyframes kb{from{transform:scale(1.14)}to{transform:scale(1)}}
+.shade{position:absolute;inset:0;z-index:1}
+.paper{background:var(--paper);color:#141724}
+.paper .dim{color:#4b5163}
+.px{transform:translate(calc(var(--mx)*var(--d,10px)),calc(var(--my)*var(--d,10px)));transition:transform .5s ease-out}
+.r{opacity:0}
+.slide.on .r{animation:rise 1s var(--ease) both;animation-delay:calc(var(--i,0)*120ms + 350ms)}
+@keyframes rise{from{opacity:0;transform:translateY(34px);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+.slide.on .pop{animation:pop .9s var(--ease) both;animation-delay:calc(var(--i,0)*120ms + 350ms)}
+@keyframes pop{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.words span{display:inline-block;opacity:0}
+.slide.on .words span{animation:word .8s var(--ease) both;animation-delay:calc(var(--w)*90ms + var(--base,400ms))}
+@keyframes word{from{opacity:0;transform:translateY(.5em) rotate(4deg);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
+.eyebrow{font-family:var(--fd);font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--aqua);display:flex;align-items:center;gap:12px;margin:0 0 22px}
+.eyebrow b{font-weight:800;font-size:15px;letter-spacing:.04em;padding:4px 9px;border-radius:8px;background:color-mix(in srgb,currentColor 16%,transparent)}
+.coral{color:var(--coral)}.lime{color:var(--lime)}.aqua{color:var(--aqua)}.gold{color:var(--gold)}.teal{color:#0a7590}
+h1,h2,h3{font-family:var(--fd);font-weight:700;letter-spacing:-.015em;margin:0 0 .4em;line-height:1.08;text-wrap:balance}
+h2{font-size:clamp(30px,4.2vw,62px)}
+h3{font-size:clamp(18px,1.6vw,24px)}
+p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
+.lead{font-size:clamp(17px,1.55vw,22px);line-height:1.5}
+.dim{color:var(--dim)}
+.src{font-size:13px;color:var(--dim)}
+.paper .src{color:#6a7084}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 28px;border-radius:999px;background:var(--aqua);color:#04262c;font-weight:700;text-decoration:none;box-shadow:0 10px 30px rgba(53,214,230,.35);transition:transform .3s}
+.btn:hover{transform:translateY(-3px)}
+.bar{position:fixed;left:0;top:0;height:3px;background:linear-gradient(90deg,var(--aqua),var(--coral),var(--lime));z-index:20;transition:width .7s var(--ease)}
+.hud{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,3vw,36px) calc(14px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.hud>*{pointer-events:auto}
+.brand{font-family:var(--fd);font-weight:700;font-size:12px;letter-spacing:.08em;color:#fff;opacity:.85}
+.brand span{opacity:.6;font-weight:500}
+.dots{display:flex;gap:5px}
+.dots button{width:7px;height:7px;padding:0;border-radius:50%;border:0;background:rgba(160,170,200,.45);transition:width .3s,background .3s}
+.dots button.on{width:22px;border-radius:5px;background:var(--aqua)}
+.nav{display:flex;align-items:center;gap:10px}
+.nav span{font-family:var(--fd);font-weight:500;font-size:13px;min-width:62px;text-align:center;color:#fff}
+.nav button{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(6,9,18,.55);backdrop-filter:blur(8px);font-size:18px}
+.hud.light .brand,.hud.light .nav span{color:#141724}.hud.light .nav button{background:rgba(255,255,255,.75);border-color:rgba(20,24,40,.2);color:#141724}
+@media(max-width:760px){.dots,.brand{display:none}.hud{background:linear-gradient(0deg,rgba(6,9,18,.9),transparent)}.hud.light{background:linear-gradient(0deg,rgba(243,239,230,.96),transparent)}}
+
+.cover{background:#000}
+.cover .bg{clip-path:circle(0% at 50% 50%)}
+.slide.on.cover .bg{animation:open 2.2s var(--ease) 2.6s both}
+@keyframes open{from{clip-path:circle(0% at 50% 50%)}to{clip-path:circle(150% at 50% 50%)}}
+.cover .shade{background:linear-gradient(90deg,rgba(3,8,16,.9) 0%,rgba(3,8,16,.45) 55%,rgba(3,8,16,.05));opacity:0}
+.slide.on.cover .shade{animation:fade 1.6s ease 3.4s both}
+.prologue{position:absolute;inset:0;z-index:5;display:grid;place-items:center;text-align:center;pointer-events:none;padding:20px}
+.prologue p{font-family:var(--fd);font-weight:500;font-size:clamp(20px,2.6vw,38px);max-width:24ch;margin:0;letter-spacing:-.01em;opacity:0}
+.slide.on .prologue p{animation:pro 3.4s ease both .2s}
+@keyframes pro{0%{opacity:0;filter:blur(10px)}22%{opacity:1;filter:blur(0)}72%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(12px);transform:scale(1.08)}}
+.cover .title{font-weight:900;font-size:clamp(40px,8.4vw,132px);line-height:.95;letter-spacing:-.035em;margin:0 0 .3em}
+.cover .title .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.cover .title .ln span{display:inline-block;transform:translateY(110%)}
+.slide.on.cover .title .ln span{animation:up 1.1s var(--ease) both}
+.slide.on.cover .title .ln:nth-child(1) span{animation-delay:3.5s}
+.slide.on.cover .title .ln:nth-child(2) span{animation-delay:3.68s}
+@keyframes up{to{transform:none}}
+.cover .title .ln:nth-child(2) span{background:linear-gradient(90deg,#fff,#a6f5fd 50%,var(--aqua));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .late{opacity:0}
+.slide.on.cover .late{animation:rise 1s var(--ease) both;animation-delay:calc(var(--i)*140ms + 4s)}
+.cover .who{display:flex;gap:30px;flex-wrap:wrap;margin-top:30px;font-size:15px}
+.cover .who b{display:block;font-family:var(--fd);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--aqua);margin-bottom:4px}
+.swimmer{position:absolute;z-index:3;right:-4vw;top:16%;width:min(58vw,880px);height:min(40vw,600px);opacity:0;pointer-events:none}
+.slide.on .swimmer{animation:swimIn 3.2s var(--ease) 4.2s both,drift 9s ease-in-out 7.4s infinite alternate}
+@keyframes swimIn{from{opacity:0;transform:translateX(30vw) scale(.8)}to{opacity:1;transform:none}}
+@keyframes drift{from{translate:0 0}to{translate:-3vw 3vh}}
+.swimmer model-viewer{width:100%;height:100%}
+@media(max-width:760px){.swimmer{top:auto;bottom:12%;width:110vw;height:60vw;right:-20vw}}
+.hint{position:absolute;right:clamp(16px,3vw,36px);top:22px;z-index:6;font-size:13px;color:var(--dim);display:flex;gap:8px;align-items:center;opacity:0}
+.slide.on .hint{animation:fade 1s ease 5s both}
+.hint kbd{font:600 12px var(--fb);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:2px 7px}
+
+.ovw{background:radial-gradient(80% 70% at 80% 10%,#1a2546,#060912 62%)}
+.ovgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+@media(max-width:1000px){.ovgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ovgrid button{display:flex;gap:14px;align-items:center;text-align:left;min-height:68px;padding:12px 16px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(160deg,#121931,#0b1020);transition:transform .35s var(--ease),border-color .3s;opacity:0}
+.slide.on .ovgrid button{animation:rise .8s var(--ease) both;animation-delay:calc(var(--i)*55ms + 400ms)}
+.ovgrid button:hover{transform:translateY(-4px);border-color:var(--c)}
+.ovgrid b{font-family:var(--fd);font-weight:800;font-size:22px;color:transparent;-webkit-text-stroke:1.2px var(--c);min-width:40px}
+.ovgrid span{font-weight:600;font-size:15px;line-height:1.3}
+
+.books .shade{background:linear-gradient(90deg,rgba(10,8,6,.95),rgba(10,8,6,.62) 55%,rgba(10,8,6,.2))}
+.books em{font-style:normal;color:#f0cf95}
+.books .eyebrow{color:var(--gold)}
+.flipwall{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(4,1fr);aspect-ratio:16/10;width:100%;perspective:1400px;border-radius:20px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.35)}
+.tile{position:relative;transform-style:preserve-3d;transition:transform 1.1s var(--ease)}
+.tile>i{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-size:500% 400%}
+.tile .f{background-image:url(m/openbook.webp)}
+.tile .b{background-image:url(m/kity-hero.webp);transform:rotateY(180deg)}
+.slide.on .tile{transform:rotateY(180deg);transition-delay:calc(var(--t)*90ms + 1.3s)}
+.slide:not(.on) .tile{transition:none}
+.facts{display:grid;gap:4px;margin-top:20px}
+.facts div{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline;padding:12px 0;border-top:1px solid #d9d2c2}
+.facts b{font-family:var(--fd);font-weight:800;font-size:clamp(24px,2.4vw,34px);letter-spacing:-.02em;color:#141724;min-width:3.4ch}
+.facts span{font-size:15.5px;color:#3c4255}
+
+.lesson .pic{border-radius:26px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5);aspect-ratio:4/3}
+.lesson .pic img{width:100%;height:100%;object-fit:cover}
+.slide.on .lesson .pic img{animation:kb 14s ease-out both}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;background:rgba(53,214,230,.14);color:var(--aqua);margin:0 6px 8px 0}
+.quote{background:var(--aqua);color:#03252b}
+.quote .bg img{opacity:.14;mix-blend-mode:multiply}
+.quote blockquote{margin:0;font-family:var(--fd);font-weight:700;font-size:clamp(26px,4.1vw,62px);line-height:1.14;letter-spacing:-.02em;max-width:22ch}
+.quote .mark{font-family:var(--fd);font-weight:900;font-size:clamp(110px,15vw,230px);line-height:.6;opacity:.22;display:block;height:.42em}
+.quote cite{display:block;margin-top:30px;font-style:normal;font-weight:600;font-size:17px}
+.hl-sweep{background:linear-gradient(90deg,#03252b,#03252b) no-repeat 0 92%/0% .12em;transition:background-size 1.2s var(--ease)}
+.slide.on .hl-sweep{background-size:100% .12em;transition-delay:2.2s}
+.why .shade{background:radial-gradient(70% 70% at 70% 50%,rgba(6,9,18,.15),rgba(6,9,18,.93))}
+.qa{display:grid;gap:18px;margin-top:20px;max-width:780px}
+.qa div{border-left:3px solid var(--aqua);padding:4px 0 4px 20px}
+.qa small{display:block;font-family:var(--fd);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--aqua);margin-bottom:6px}
+.qa div:first-child{border-color:var(--coral)}.qa div:first-child small{color:var(--coral)}
+
+.manifesto{background:#05070e}
+.mline{font-family:var(--fd);font-weight:800;font-size:clamp(30px,5.2vw,86px);line-height:1.04;letter-spacing:-.03em;margin:0}
+.mline.small{font-weight:500;font-size:clamp(18px,2vw,30px);letter-spacing:-.01em;color:var(--dim);margin-bottom:.8em}
+.strike{position:relative;display:inline-block}
+.strike::after{content:"";position:absolute;left:-2%;right:-2%;top:54%;height:.09em;background:var(--coral);transform:scaleX(0);transform-origin:left}
+.slide.on .strike::after{animation:strike .7s var(--ease) 2.5s both}
+@keyframes strike{to{transform:scaleX(1)}}
+.boredom{color:var(--coral);display:inline-block}
+.slide.on .boredom{animation:slam .9s var(--ease) 3.1s both}
+@keyframes slam{from{opacity:0;transform:scale(1.8);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+.manifesto .glow,.gap .glow{position:absolute;right:-10vw;bottom:-20vh;width:70vw;height:70vw;border-radius:50%;background:radial-gradient(circle,rgba(255,106,77,.2),transparent 60%);z-index:0}
+.gap .glow{right:auto;left:-10vw;top:-20vh;bottom:auto;background:radial-gradient(circle,rgba(53,214,230,.14),transparent 60%)}
+
+.cards{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:14px;margin-top:28px}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.cards{grid-template-columns:1fr}}
+.pr{position:relative;border-radius:22px;padding:22px 20px 24px;background:linear-gradient(160deg,#141b33,#0b1020);border:1px solid rgba(255,255,255,.08);transition:transform .4s var(--ease),border-color .3s;overflow:hidden}
+.pr:hover{transform:translateY(-6px) rotate(-.6deg);border-color:var(--c)}
+.pr .n{font-family:var(--fd);font-weight:900;font-size:52px;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--c);margin-bottom:14px}
+.pr h3{font-size:19px;margin-bottom:8px;color:var(--c)}
+.pr p{font-size:15px;color:#c9cfe2;margin:0}
+.pr::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,var(--c),transparent 70%);opacity:.18}
+.pr .ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 16%,transparent);margin-bottom:16px}
+.pr .ic svg{width:28px;height:28px;fill:none;stroke:var(--c);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pr p.src{margin-top:12px;color:var(--dim);font-size:13px}
+
+.lit{background:radial-gradient(70% 60% at 50% 0%,#17203b,#060912)}
+.tl{position:relative;height:170px;margin:56px 0 30px}
+.tl::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:linear-gradient(90deg,var(--aqua),var(--coral),var(--violet),var(--gold));transform:scaleX(0);transform-origin:left}
+.slide.on .tl::before{animation:strike 1.6s var(--ease) .5s both}
+.node{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;opacity:0}
+.slide.on .node{animation:fade .7s ease both;animation-delay:calc(var(--i)*110ms + 900ms)}
+.node i{display:block;width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:0 0 0 5px color-mix(in srgb,var(--c) 25%,transparent),0 0 24px var(--c)}
+.node span{position:absolute;left:7px;transform:translateX(-50%);white-space:nowrap;font-size:12.5px;font-weight:600;color:#dfe5f5;text-align:center}
+.node span b{display:block;font-family:var(--fd);font-weight:700;font-size:14px;color:var(--c)}
+.node.up span{bottom:24px}.node.dn span{top:24px}
+.node.hi.up span{bottom:66px}.node.hi.dn span{top:66px}
+.node.hi::before{content:"";position:absolute;left:6px;width:1.5px;height:44px;background:color-mix(in srgb,var(--c) 60%,transparent)}
+.node.hi.up::before{bottom:20px}.node.hi.dn::before{top:20px}
+@media(max-width:860px){.tl{display:none}}
+.themes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:18px}
+@media(max-width:1000px){.themes{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.themes{grid-template-columns:1fr}}
+.th{border-radius:18px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-top:3px solid var(--c)}
+.th h3{font-size:16px;color:var(--c);margin-bottom:6px}
+.th p{font-size:14px;color:#c9cfe2;margin:0}
+
+.gap{background:#05070e}
+.gapline{font-family:var(--fd);font-weight:700;font-size:clamp(20px,2.4vw,36px);line-height:1.25;max-width:34ch;margin-top:30px}
+.gapline mark{background:none;color:var(--coral)}
+
+.rq{background:var(--paper);color:#141724}
+.main-q{font-family:var(--fd);font-weight:700;font-size:clamp(21px,2.5vw,38px);line-height:1.25;letter-spacing:-.01em;max-width:31ch;margin:0 0 30px}
+.main-q mark{background:linear-gradient(transparent 62%,rgba(53,214,230,.5) 62%) no-repeat 0 0/0% 100%;color:inherit;transition:background-size 1.2s var(--ease)}
+.slide.on .main-q mark{background-size:100% 100%;transition-delay:1.4s}
+.rqs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media(max-width:760px){.rqs{grid-template-columns:1fr}}
+.rqs div{background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 10px 30px rgba(20,24,40,.07);font-size:16px}
+.rqs b{display:block;font-family:var(--fd);font-size:13px;color:#0a7590;margin-bottom:6px}
+.rqs em{display:block;font-style:normal;font-size:13px;color:#6a7084;margin-top:6px}
+.note{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid var(--coral);color:var(--coral);margin-top:20px}
+
+.groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+@media(max-width:760px){.groups{grid-template-columns:1fr}}
+.g{border-radius:22px;overflow:hidden;background:#10152a;border:1px solid rgba(255,255,255,.08)}
+.g .shot{aspect-ratio:16/8;overflow:hidden}
+.g .shot img{width:100%;height:100%;object-fit:cover;object-position:top}
+.g .t{padding:16px 20px 20px}
+.g .k{font-family:var(--fd);font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+.g h3{margin:6px 0 4px;font-size:20px}
+.g p{margin:0;font-size:15px;color:#c7cde0}
+
+.arena{position:relative;height:min(36vh,320px);margin-top:20px}
+.arena .room{position:absolute;top:0;bottom:0;width:46%;border-radius:22px;border:1px dashed rgba(255,255,255,.18)}
+.arena .room.a{left:0}.arena .room.b{right:0}
+.arena .room span{position:absolute;left:16px;top:12px;font-family:var(--fd);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.arena .room em{position:absolute;left:16px;bottom:12px;font-style:normal;font-size:14px;color:var(--dim);right:16px}
+.kid{position:absolute;width:22px;height:22px;border-radius:50%;background:#dfe5f5;left:calc(50% - 11px);top:calc(50% - 11px);transition:left 1.2s var(--ease),top 1.2s var(--ease),background .6s;box-shadow:0 4px 10px rgba(0,0,0,.4)}
+.kid.ga{background:var(--gold)}.kid.gb{background:var(--aqua)}
+.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:20px}
+.flow span{padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);font-size:15px;font-weight:600}
+.flow i{font-style:normal;color:var(--coral)}
+
+.testcard{background:#fff;color:#141724;border-radius:20px;padding:20px 22px;box-shadow:0 30px 70px rgba(0,0,0,.5);position:relative}
+.testcard .tg{position:absolute;right:16px;top:14px;font-family:var(--fd);font-size:11px;font-weight:700;color:#0a7590}
+.testcard .q{font-weight:700;margin-bottom:12px}
+.testcard .o{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:15px}
+.testcard .o span{padding:8px 12px;border:1.5px solid #dfe3ec;border-radius:10px}
+.testcard .o span.ok{border-color:#2fbf8a;background:#e9f8f1}
+.smiley{display:flex;justify-content:space-between;gap:6px;margin-top:22px}
+.smiley div{flex:1;text-align:center;font-size:12px;color:#dfe8fa;opacity:0}
+.smiley svg{width:clamp(36px,4vw,54px);height:auto;margin:0 auto 6px;display:block}
+.slide.on .smiley div{animation:pop .6s var(--ease) both;animation-delay:calc(var(--i)*120ms + 1.2s)}
+.abs{display:grid;gap:6px;margin-top:16px}
+.abs div{display:grid;grid-template-columns:120px 1fr;gap:12px;font-size:15.5px;color:#c9cfe2;padding:10px 0;border-top:1px solid rgba(255,255,255,.1)}
+.abs b{font-family:var(--fd);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--c);padding-top:3px}
+
+.chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:26px}
+@media(max-width:860px){.chain{grid-template-columns:1fr 1fr;gap:14px}}
+.lnk{position:relative;padding:22px 22px 24px;border-radius:22px;background:#fff;box-shadow:0 14px 34px rgba(20,24,40,.08);margin-right:18px}
+.lnk:not(:last-child)::after{content:"→";position:absolute;right:-17px;top:50%;transform:translateY(-50%);font-size:22px;color:var(--coral);font-weight:800}
+@media(max-width:860px){.lnk{margin-right:0}.lnk::after{display:none}}
+.lnk b{font-family:var(--fd);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#0a7590}
+.lnk h3{margin:.4em 0 .3em;font-size:20px}
+.lnk p{font-size:15px;color:#4b5163;margin:0}
+.limits{margin-top:26px;padding:16px 20px;border-radius:16px;background:#e9e3d6;font-size:15px;color:#2a2f40;max-width:none}
+
+.status{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:26px}
+@media(max-width:760px){.status{grid-template-columns:1fr}}
+.st{border-radius:22px;padding:22px 24px;background:#fff;box-shadow:0 14px 34px rgba(20,24,40,.08)}
+.st h3{font-size:18px;margin-bottom:12px}
+.st ul{margin:0;padding:0;list-style:none}
+.st li{display:grid;grid-template-columns:26px 1fr;gap:8px;padding:8px 0;border-top:1px solid #ece6da;font-size:15.5px;color:#2a2f40}
+.st li i{font-style:normal;font-weight:800}
+.st.done li i{color:#2fbf8a}.st.todo li i{color:var(--coral)}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.stack span{padding:8px 14px;border-radius:999px;background:#e9e3d6;font-size:14px;font-weight:600;color:#2a2f40}
+
+.ch .shade{background:linear-gradient(90deg,rgba(4,9,16,.94),rgba(4,9,16,.66) 52%,rgba(4,9,16,.15))}
+.feats{display:grid;gap:10px;margin-top:18px;max-width:560px}
+.feats div{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;font-size:16px}
+.feats i{font-style:normal;font-family:var(--fd);font-weight:700;font-size:13px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}
+.feats b{display:block}
+.live{position:absolute;z-index:3}
+.live model-viewer{width:100%;height:100%}
+.livecap{position:absolute;z-index:4;font-size:12px;color:var(--dim);display:flex;gap:6px;align-items:center}
+.livecap::before{content:"";width:8px;height:8px;border-radius:50%;background:#ff4d4d;animation:rec 1.6s infinite}
+@keyframes rec{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6)}100%{box-shadow:0 0 0 10px rgba(255,77,77,0)}}
+.depth{position:absolute;left:clamp(10px,2vw,26px);top:12%;bottom:14%;width:3px;background:rgba(255,255,255,.14);z-index:4;border-radius:3px}
+.depth i{position:absolute;left:0;top:0;width:3px;height:0;background:linear-gradient(var(--aqua),#0a4e6a);border-radius:3px}
+.slide.on .depth i{animation:dive 4s var(--ease) .8s both}
+@keyframes dive{to{height:100%}}
+.depth span{position:absolute;left:12px;font-family:var(--fd);font-size:11px;color:var(--dim);white-space:nowrap}
+.pbar{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.pbar button{width:56px;height:56px;border-radius:50%;border:2px solid transparent;background:transparent;padding:3px;transition:transform .3s,border-color .3s}
+.pbar button img{width:100%;height:100%;object-fit:contain}
+.pbar button:hover{transform:scale(1.1)}
+.pbar button[aria-pressed=true]{border-color:var(--coral)}
+.clock{font-family:var(--fd);font-weight:900;font-size:clamp(60px,9vw,150px);line-height:.9;letter-spacing:-.04em;color:var(--lime)}
+@media(min-width:901px){.ch .in>*{max-width:min(52%,640px)}}
+@media(max-width:900px){.live{top:64px!important;right:-12vw!important;width:70vw!important;height:52vw!important;opacity:.35;pointer-events:none}.livecap,.depth{display:none}}
+
+.ipad{position:relative;width:100%;max-width:640px;aspect-ratio:4/3;border-radius:34px;padding:16px;background:linear-gradient(145deg,#2a3048,#11152a);box-shadow:0 50px 100px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.1);transform:perspective(1600px) rotateY(calc(-8deg + var(--mx)*4deg)) rotateX(calc(4deg + var(--my)*-3deg));transition:transform .6s ease-out}
+.ipad .scr{position:relative;width:100%;height:100%;border-radius:20px;overflow:hidden;background:#000;container-type:size}
+.ipad .scr img{position:absolute;left:0;top:0;width:100%;height:auto;max-width:none;transition:opacity .25s}
+.slide.on .ipad .scr img.run{animation:scroll 46s ease-in-out 1.2s infinite alternate}
+@keyframes scroll{to{transform:translateY(calc(-100% + 100cqh))}}
+.ipad{opacity:0}.slide.on .ipad{animation:fade 1s ease .6s both}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 6px}
+.tabs button{min-height:42px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:transparent;font-weight:700;font-size:14px}
+.tabs button[aria-pressed=true]{background:var(--c,var(--aqua));color:#04131a;border-color:transparent}
+
+.choice{background:var(--night2)}
+.table{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.opt{border-radius:22px;overflow:hidden;position:relative;aspect-ratio:4/5}
+.opt img{width:100%;height:100%;object-fit:cover}
+.opt::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent 50%)}
+.opt span{position:absolute;left:14px;bottom:14px;right:14px;font-family:var(--fd);font-weight:700;font-size:18px;z-index:1}
+.qmark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:86px;height:86px;border-radius:50%;background:var(--coral);display:grid;place-items:center;font-family:var(--fd);font-weight:800;font-size:40px;z-index:2;box-shadow:0 0 0 10px rgba(255,106,77,.25)}
+.slide.on .qmark{animation:pulse 2s ease-in-out 1.6s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 24px rgba(255,106,77,0)}}
+
+.beyond .shade{background:linear-gradient(90deg,rgba(3,4,10,.95),rgba(3,4,10,.75) 55%,rgba(3,4,10,.4))}
+.road{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:30px;position:relative}
+@media(max-width:860px){.road{grid-template-columns:1fr 1fr;gap:20px}}
+.road::before{content:"";position:absolute;left:0;right:0;top:15px;height:2px;background:rgba(255,255,255,.15)}
+.road .line{position:absolute;left:0;top:15px;height:2px;background:linear-gradient(90deg,var(--aqua),var(--coral));width:0}
+.slide.on .road .line{animation:grow 1.8s var(--ease) .9s both}
+@keyframes grow{to{width:37.5%}}
+.step{position:relative;padding-right:18px}
+.step .dot{width:32px;height:32px;border-radius:50%;background:var(--night);border:2px solid rgba(255,255,255,.3);display:grid;place-items:center;font-size:14px;font-weight:800;margin-bottom:14px;position:relative}
+.step.done .dot{background:var(--aqua);border-color:var(--aqua);color:#04262c}
+.step.now .dot{background:var(--coral);border-color:var(--coral)}
+.step h3{font-size:17px;margin-bottom:4px}
+.step p{font-size:14.5px;color:#c7cde0;margin:0}
+@media(max-width:860px){.road::before,.road .line{display:none}}
+
+.refs{background:radial-gradient(70% 60% at 50% 0%,#141b33,#060912)}
+.reflist{column-count:2;column-gap:42px;margin-top:22px;font-size:clamp(13px,1vw,15px);line-height:1.45;color:#c9cfe2}
+@media(max-width:860px){.reflist{column-count:1}}
+.reflist p{margin:0 0 10px;padding-left:1.4em;text-indent:-1.4em;break-inside:avoid;max-width:none}
+.reflist i{color:#fff}
+
+.end .in{text-align:center;display:flex;flex-direction:column;align-items:center}
+.end .shade{background:radial-gradient(60% 60% at 50% 50%,rgba(6,9,18,.25),rgba(6,9,18,.92))}
+.end h2{font-size:clamp(38px,6.6vw,108px);font-weight:900;letter-spacing:-.035em;line-height:1}
+.end h2 .alive{display:inline-block;background:linear-gradient(90deg,var(--aqua),#fff,var(--coral),var(--lime),var(--aqua));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.slide.on .end-t .alive{animation:shine 6s linear 1.5s infinite}
+@keyframes shine{to{background-position:300% 0}}
+.earth{position:absolute;left:50%;bottom:-50vw;width:72vw;height:72vw;transform:translateX(-50%);z-index:2;opacity:.9}
+.earth model-viewer{width:100%;height:100%}
+@media(prefers-reduced-motion:reduce){.r,.pop,.words span,.late,.prologue p,.cover .title .ln span,.ovgrid button,.node,.smiley div,.ipad{opacity:1!important;transform:none!important;animation:none!important;filter:none!important}.cover .bg{clip-path:none}.cover .shade{opacity:1}.slide.on{animation:none}.bg video{display:none}}
+
+/* ===== 10-slide version additions ===== */
+.cov{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,70px);align-items:center}
+@media(max-width:900px){.cov{grid-template-columns:1fr}}
+.toc{list-style:none;margin:0;padding:18px 20px;border-radius:22px;background:rgba(6,12,24,.62);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1)}
+.toc li{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:8px;padding:9px 0;border-top:1px solid rgba(255,255,255,.08);opacity:0}
+.toc li:first-child{border-top:0}
+.slide.on .toc li{animation:rise .8s var(--ease) both;animation-delay:calc(var(--i)*90ms + 4.3s)}
+.toc button{all:unset;cursor:pointer;display:contents}
+.toc b{font-family:var(--fd);font-weight:800;font-size:18px;color:transparent;-webkit-text-stroke:1.1px var(--c)}
+.toc span{font-weight:600;font-size:15.5px}
+.toc li:hover span{color:var(--aqua)}
+.toch{font-family:var(--fd);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 6px}
+.story{display:grid;gap:12px;margin-top:6px}
+.story div{display:grid;grid-template-columns:128px 1fr;gap:14px;align-items:baseline;padding-top:12px;border-top:1px solid rgba(255,255,255,.1)}
+.story b{font-family:var(--fd);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--c,var(--aqua))}
+.story span{font-size:15.5px;color:#d2d8e8;line-height:1.5}
+.photoq{position:relative;border-radius:26px;overflow:hidden;aspect-ratio:4/5;max-height:72vh;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.photoq img{width:100%;height:100%;object-fit:cover}
+.slide.on .photoq img{animation:kb 14s ease-out both}
+.photoq .qq{position:absolute;left:16px;right:16px;bottom:16px;padding:18px 20px;border-radius:18px;background:rgba(53,214,230,.94);color:#03252b;font-family:var(--fd);font-weight:700;font-size:clamp(16px,1.45vw,22px);line-height:1.25;opacity:0}
+.slide.on .photoq .qq{animation:rise 1s var(--ease) 1.3s both}
+.photoq .qq small{display:block;margin-top:8px;font-family:var(--fb);font-weight:600;font-size:12.5px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stat{border-radius:18px;padding:16px 18px;background:#fff;box-shadow:0 12px 30px rgba(20,24,40,.08)}
+.stat b{display:block;font-family:var(--fd);font-weight:800;font-size:clamp(26px,2.6vw,40px);letter-spacing:-.02em;color:var(--c);line-height:1.05}
+.stat span{display:block;font-size:14px;color:#2a2f40;margin-top:6px;line-height:1.4}
+.stat em{display:block;font-style:normal;font-size:12px;color:#7a8093;margin-top:6px}
+.abs.dark div{color:#2a2f40;border-color:#ddd5c5}
+.mixed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+@media(max-width:760px){.mixed{grid-template-columns:1fr}}
+.mx{border-radius:20px;padding:16px 18px;background:linear-gradient(160deg,#141b33,#0b1020);border:1px solid rgba(255,255,255,.08);border-top:3px solid var(--c)}
+.mx h3{font-size:16px;color:var(--c);margin-bottom:6px}
+.mx ul{margin:0;padding-left:18px;font-size:14.5px;color:#c9cfe2}
+.mx li{margin:3px 0}
+.arena.sm{height:min(24vh,200px);margin-top:16px}
+.eth4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+@media(max-width:1000px){.eth4{grid-template-columns:1fr 1fr}}
+.eth4 div{border-radius:16px;padding:14px 16px;background:#fff;box-shadow:0 10px 26px rgba(20,24,40,.07)}
+.eth4 b{display:block;font-family:var(--fd);font-size:13px;color:var(--c);margin-bottom:4px}
+.eth4 span{font-size:13.5px;color:#3c4255;line-height:1.45}
+.subh{font-family:var(--fd);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7a8093;margin:26px 0 0}
+.chain.sm .lnk{padding:16px 18px}
+.chain.sm .lnk h3{font-size:17px}
+.chain.sm .lnk p{font-size:14px}
+.princ{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.princ span{padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c);border:1px solid color-mix(in srgb,var(--c) 40%,transparent)}
+.prod .live{right:2vw;top:12%;width:min(44vw,660px);height:min(36vw,540px)}
+.prod .shade{background:linear-gradient(90deg,rgba(4,9,16,.95),rgba(4,9,16,.7) 50%,rgba(4,9,16,.2))}
+@media(min-width:901px){.prod .in>*{max-width:min(54%,660px)}}
+.startup .shade{background:linear-gradient(90deg,rgba(3,4,10,.95),rgba(3,4,10,.78) 55%,rgba(3,4,10,.45))}
+.bigq{font-family:var(--fd);font-weight:800;font-size:clamp(24px,3.2vw,48px);line-height:1.12;letter-spacing:-.02em;max-width:24ch;margin:0 0 18px}
+.bigq mark{background:none;color:var(--coral)}
+/* showcase */
+.show{background:radial-gradient(80% 70% at 50% 30%,#16264a,#04060d 70%)}
+.show .in{text-align:center;display:flex;flex-direction:column;align-items:center}
+.devices{position:relative;width:100%;max-width:1100px;height:min(48vh,430px);margin:18px auto 0}
+.dev{position:absolute;bottom:0;opacity:0}
+.slide.on .dev{animation:devin 1.2s var(--ease) both;animation-delay:calc(var(--i)*180ms + 500ms)}
+@keyframes devin{from{opacity:0;transform:translateY(60px) scale(.94)}to{opacity:1;transform:none}}
+.dev .scr{position:relative;overflow:hidden;background:#000;container-type:size}
+.dev .scr img{position:absolute;left:0;top:0;width:100%;height:auto;max-width:none}
+.slide.on .dev .scr img{animation:scroll var(--dur,40s) ease-in-out 1.6s infinite alternate}
+.laptop{left:50%;width:min(46%,560px);margin-left:calc(min(46%,560px) / -2);z-index:2}
+.laptop .lid{padding:14px 14px 18px;border-radius:18px 18px 4px 4px;background:linear-gradient(160deg,#2b3149,#12162a);box-shadow:0 40px 90px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.1)}
+.laptop .scr{aspect-ratio:16/10;border-radius:6px}
+.laptop .base{height:16px;margin:0 -7%;border-radius:0 0 18px 18px;background:linear-gradient(#3a4058,#1a1e30);box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.tab{width:min(18%,215px);z-index:1;padding:10px;border-radius:24px;background:linear-gradient(145deg,#2a3048,#11152a);box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.1)}
+.tab .scr{aspect-ratio:3/4;border-radius:14px}
+.tab.l{left:2%;transform-origin:bottom right}.tab.r{right:2%}
+.slide.on .tab.l{animation:devinL 1.2s var(--ease) both .5s}
+.slide.on .tab.r{animation:devinR 1.2s var(--ease) both .86s}
+@keyframes devinL{from{opacity:0;transform:translateX(-60px) rotate(-10deg)}to{opacity:1;transform:rotate(-5deg)}}
+@keyframes devinR{from{opacity:0;transform:translateX(60px) rotate(10deg)}to{opacity:1;transform:rotate(5deg)}}
+.devcap{position:absolute;bottom:-34px;left:0;right:0;text-align:center;font-family:var(--fd);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+.show h2{font-size:clamp(28px,3.6vw,54px)}
+.endrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:54px}
+.btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);box-shadow:none}
+.refpanel{position:fixed;inset:0;z-index:40;background:rgba(4,6,13,.86);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:24px}
+.refpanel.open{display:flex}
+.refpanel .box{max-width:1100px;max-height:86vh;overflow-y:auto;background:#0e1428;border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:28px 32px;text-align:left}
+.refpanel .box h3{font-size:22px;margin-bottom:14px}
+.refpanel .close{float:right;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:transparent;font-size:18px}
+@media(max-width:760px){.tab{display:none}.laptop{width:92%;margin-left:-46%}}
+
+/* ===== less-text pass ===== */
+.huge{font-family:var(--fd);font-weight:800;font-size:clamp(34px,5.2vw,84px);line-height:1.02;letter-spacing:-.03em;margin:0 0 .35em;text-wrap:balance}
+.huge mark{background:none;color:var(--c,var(--aqua))}
+.paper .huge{color:#141724}
+.journey{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:30px;position:relative}
+.journey::before{content:"";position:absolute;left:24px;right:24px;top:24px;height:2px;background:linear-gradient(90deg,var(--gold),var(--coral),var(--aqua),var(--lime));transform:scaleX(0);transform-origin:left}
+.slide.on .journey::before{animation:strike 1.6s var(--ease) .6s both}
+.jstep{position:relative;padding-right:12px;opacity:0}
+.slide.on .jstep{animation:rise .8s var(--ease) both;animation-delay:calc(var(--i)*260ms + 700ms)}
+.jstep .ji{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#0b0f1c;border:2px solid var(--c);margin-bottom:12px;position:relative}
+.jstep .ji svg{width:22px;height:22px;fill:none;stroke:var(--c);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.jstep b{display:block;font-family:var(--fd);font-weight:700;font-size:clamp(14px,1.25vw,18px);line-height:1.2}
+.jstep span{display:block;font-size:13.5px;color:var(--dim);margin-top:4px}
+@media(max-width:760px){.journey{grid-template-columns:1fr 1fr;gap:18px}.journey::before{display:none}}
+.bigquote{font-family:var(--fd);font-weight:700;font-size:clamp(22px,2.6vw,40px);line-height:1.15;letter-spacing:-.02em;max-width:22ch}
+.bigquote small{display:block;margin-top:12px;font-family:var(--fb);font-weight:600;font-size:14px;color:var(--dim);letter-spacing:0}
+.nums{display:grid;gap:14px}
+.num{display:grid;grid-template-columns:clamp(150px,16vw,290px) 1fr;gap:20px;align-items:center;padding:16px 0;border-top:1px solid #ddd5c5;opacity:0}
+.slide.on .num{animation:rise .8s var(--ease) both;animation-delay:calc(var(--i)*180ms + 500ms)}
+.num b{font-family:var(--fd);font-weight:900;font-size:clamp(34px,3.8vw,62px);white-space:nowrap;letter-spacing:-.04em;line-height:.95;color:var(--c)}
+.num span{font-size:clamp(15px,1.3vw,19px);font-weight:600;color:#141724;line-height:1.3}
+.num em{display:block;font-style:normal;font-size:12.5px;color:#7a8093;margin-top:4px;font-weight:500}
+.tiles{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:12px;margin-top:24px}
+@media(max-width:760px){.tiles{grid-template-columns:1fr 1fr}}
+.tile2{border-radius:20px;padding:18px;background:linear-gradient(160deg,#141b33,#0b1020);border:1px solid rgba(255,255,255,.08);opacity:0;transition:transform .35s var(--ease),border-color .3s}
+.paper .tile2{background:#fff;border-color:#e6dfd0;box-shadow:0 12px 30px rgba(20,24,40,.07)}
+.slide.on .tile2{animation:pop .8s var(--ease) both;animation-delay:calc(var(--i)*130ms + 500ms)}
+.tile2:hover{transform:translateY(-5px);border-color:var(--c)}
+.tile2 .ti{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 16%,transparent);margin-bottom:12px}
+.tile2 .ti svg{width:24px;height:24px;fill:none;stroke:var(--c);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tile2 b{display:block;font-family:var(--fd);font-weight:700;font-size:clamp(15px,1.3vw,19px);color:var(--c);line-height:1.2}
+.tile2 span{display:block;font-size:14px;color:#c9cfe2;margin-top:6px;line-height:1.4}
+.paper .tile2 span{color:#3c4255}
+.gapbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:26px;padding:18px 22px;border-radius:20px;background:rgba(255,106,77,.1);border:1px solid rgba(255,106,77,.35)}
+.gapbar b{font-family:var(--fd);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin-right:6px}
+.gapbar span{padding:8px 14px;border-radius:999px;background:rgba(255,106,77,.16);font-weight:700;font-size:15px}
+.takeaways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:6px}
+@media(max-width:760px){.takeaways{grid-template-columns:1fr}}
+.tk{border-left:3px solid var(--c);padding:4px 0 4px 14px;opacity:0}
+.slide.on .tk{animation:rise .8s var(--ease) both;animation-delay:calc(var(--i)*140ms + 1.6s)}
+.tk b{display:block;font-family:var(--fd);font-weight:700;font-size:clamp(14px,1.25vw,18px)}
+.tk span{display:block;font-size:12.5px;color:var(--dim);margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chips span{padding:9px 15px;border-radius:999px;font-weight:700;font-size:15px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14)}
+.chips span b{font-family:var(--fd);color:var(--c,var(--aqua));margin-right:6px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,3vw,40px);margin-top:20px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+.colh{font-family:var(--fd);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#0a7590;margin:0 0 10px}
+.rq4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+@media(max-width:900px){.rq4{grid-template-columns:1fr 1fr}}
+.rq4 div{border-radius:20px;padding:18px;background:#fff;box-shadow:0 12px 30px rgba(20,24,40,.07);opacity:0}
+.slide.on .rq4 div{animation:pop .8s var(--ease) both;animation-delay:calc(var(--i)*140ms + 1.6s)}
+.rq4 small{display:block;font-family:var(--fd);font-size:12px;color:#7a8093}
+.rq4 b{display:block;font-family:var(--fd);font-weight:800;font-size:clamp(17px,1.6vw,23px);color:var(--c);margin:6px 0}
+.rq4 span{font-size:14px;color:#3c4255;line-height:1.4}
+.notes{display:none}
+.show .devices{height:min(42vh,430px)!important;flex:none}
+.show .endrow{margin-top:46px}
+.cov .title{font-size:clamp(30px,4.6vw,62px)}
+.laptop{width:min(46%,560px,calc((42vh - 40px) * 1.55))!important;margin-left:calc(min(46%,560px,calc((42vh - 40px) * 1.55)) / -2)!important}
+.tab{width:min(18%,215px,calc(42vh * .55))!important}
+.grid2 .huge{font-size:clamp(30px,3.6vw,56px)}
+.big1 .tile2{display:flex;align-items:baseline;gap:14px;padding:20px 22px}.big1 .tile2 b{font-size:clamp(18px,1.7vw,26px)}.big1 .tile2 span{margin:0;font-size:15px}
+.big2 .tile2{display:flex;align-items:center;gap:14px;padding:20px 22px}.big2 .tile2 .ti{margin:0;flex:none}.big2 .tile2 b{font-size:clamp(17px,1.5vw,22px)}
+.notepanel{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);width:min(900px,92vw);max-height:40vh;overflow-y:auto;z-index:30;background:rgba(8,12,24,.96);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:16px 20px;font-size:15px;line-height:1.55;color:#e6ebf7;display:none}
+.notepanel.open{display:block}
+.notepanel b{font-family:var(--fd);font-size:12px;letter-spacing:.1em;color:var(--aqua);display:block;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<main class="deck" id="deck">
+
+<!-- 1 · TITLE + STRUCTURE -->
+<section class="slide cover" data-name="The Living Encyclopedia">
+  <div class="bg kb"><video muted loop playsinline poster="m/whale-hero.webp"><source src="m/whale-hero.mp4" type="video/mp4"></video></div>
+  <div class="shade"></div>
+  <div class="prologue"><p>When I was a child, knowledge lived in books.</p></div>
+  <div class="hint"><kbd>←</kbd><kbd>→</kbd> or swipe</div>
+  <div class="in cov">
+    <div>
+      <p class="eyebrow late" style="--i:0">Diploma project · Communication and Media</p>
+      <h1 class="title"><span class="ln"><span>The Living</span></span><span class="ln"><span>Encyclopedia</span></span></h1>
+      <p class="lead late" style="--i:1;max-width:36ch">The effect of an interactive animated web encyclopedia on children’s knowledge retention and engagement</p>
+      <div class="who late" style="--i:2"><div><b>Student</b>Erik Stybaev</div><div><b>Faculty</b>Elena Kolesova</div><div><b>University</b>University of Central Asia</div></div>
+    </div>
+    <div>
+      <p class="toch late" style="--i:3">Structure</p>
+      <ol class="toc" id="toc"></ol>
+    </div>
+  </div>
+  <aside class="notes">Good morning. My diploma project is the Living Encyclopedia: an interactive web encyclopedia for children aged 10 to 12, and a study of whether it helps them remember more and enjoy reading more. In the next ten minutes: my background, the project, the research questions, the literature, the product, the methodology, the analysis and ethics, why I am doing this research, and then the site itself.</aside>
+</section>
+
+<!-- 2 · BACKGROUND -->
+<section class="slide why" data-sec="01" data-name="Background">
+  <div class="bg kb"><img src="m/books.webp" alt=""></div>
+  <div class="shade" style="background:linear-gradient(90deg,rgba(8,7,6,.95),rgba(8,7,6,.78) 55%,rgba(8,7,6,.45))"></div>
+  <div class="in grid2">
+    <div>
+      <p class="eyebrow r gold" style="--i:0"><b>01</b>Background</p>
+      <h2 class="huge r" style="--i:1;--c:var(--gold)">It started with <mark>a lesson</mark> about whales</h2>
+      <div class="journey">
+        <div class="jstep" style="--i:0;--c:var(--gold)"><div class="ji"><svg viewBox="0 0 24 24"><path d="M4 5h6a3 3 0 013 3v11a2 2 0 00-2-2H4zM20 5h-6a3 3 0 00-3 3v11a2 2 0 012-2h7z"/></svg></div><b>Childhood</b><span>the encyclopedia</span></div>
+        <div class="jstep" style="--i:1;--c:var(--coral)"><div class="ji"><svg viewBox="0 0 24 24"><path d="M3 10l9-5 9 5-9 5z"/><path d="M7 12v5c3 2 7 2 10 0v-5"/></svg></div><b>2 years</b><span>at school</span></div>
+        <div class="jstep" style="--i:2;--c:var(--aqua)"><div class="ji"><svg viewBox="0 0 24 24"><path d="M3 13c4-6 10-6 14-2l4-3-1 5 1 5-4-3c-4 4-10 4-14-2z"/></svg></div><b>Whales lesson</b><span>logic class</span></div>
+        <div class="jstep" style="--i:3;--c:var(--lime)"><div class="ji"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 00-4 10.5V17h8v-3.5A6 6 0 0012 3zM9 21h6"/></svg></div><b>The idea</b><span>a living encyclopedia</span></div>
+      </div>
+    </div>
+    <div class="photoq pop" style="--i:2"><img src="m/oc-breach.webp" alt="A humpback whale breaching"><div class="qq">“A website like this, about different topics, and interactive. Books are boring to read now.”<small>— a top student, after the lesson</small></div></div>
+  </div>
+  <aside class="notes">As children, most of us got our first knowledge from books, and the most exciting one was the encyclopedia. For the last two years I have worked at a school with children of very different ages, and I noticed that the way they take in information has changed. Last year I taught logic and general knowledge, and for one lesson I made a bright, interactive presentation about whales. The children loved it, and a top student said: it would be great to have a website like this, about different topics, and interactive, because books are boring to read now. When Elena asked me why my first chapter is about whales, I could not remember. Now I do: the idea started in that lesson.</aside>
+</section>
+
+<!-- 3 · PROJECT ABSTRACT -->
+<section class="slide paper" data-sec="02" data-name="Project abstract" data-light>
+  <div class="in grid2">
+    <div>
+      <p class="eyebrow r coral" style="--i:0"><b>02</b>Project abstract</p>
+      <h2 class="huge r" style="--i:1;--c:#0a7590">A living encyclopedia, <mark>tested with children</mark></h2>
+      <div class="tiles" style="--n:3">
+        <div class="tile2" style="--i:0;--c:#0a7590"><div class="ti"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><b>Prototype</b><span>3 scrolling chapters</span></div>
+        <div class="tile2" style="--i:1;--c:#d63a2f"><div class="ti"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c1-4 4-6 6-6s5 2 6 6M14 14c2 0 5 2 6 6"/></svg></div><b>Study</b><span>30 children, 10–12</span></div>
+        <div class="tile2" style="--i:2;--c:#3d7d10"><div class="ti"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div><b>Outcome</b><span>evidence + guidance</span></div>
+      </div>
+    </div>
+    <div class="nums">
+      <div class="num" style="--i:1;--c:#d63a2f"><b>5.5 h</b><span>a day on screens, ages 8–12<em>Rideout et al., 2022</em></span></div>
+      <div class="num" style="--i:2;--c:#0a7590"><b>54</b><span>studies: texts are understood better on paper<em>Delgado et al., 2018</em></span></div>
+      <div class="num" style="--i:3;--c:#b44a83"><b>80%+</b><span>of teens in Kyrgyzstan read below the OECD average<em>OECD, 2010</em></span></div>
+      <div class="num" style="--i:4;--c:#3d7d10"><b>≈344</b><span>Kyrgyzstan’s PISA 2025 reading score<em>Times of Central Asia, 2026</em></span></div>
+    </div>
+  </div>
+  <aside class="notes">Printed encyclopedias now compete with short videos and games. Children aged 8 to 12 spend over five and a half hours a day on screen entertainment (Rideout et al., 2022). A meta-analysis of 54 studies with over 170,000 readers found that informational texts are understood better on paper (Delgado et al., 2018), and Wolf (2018) links digital habits to weaker deep reading. In Kyrgyzstan this is urgent: in PISA 2009 the country was last, with over 80% of 15-year-olds reading below the OECD average, and in PISA 2025 the score is about 344, still far below. My project asks whether the visual and interactive language of digital media can bring encyclopedic knowledge back to children, and whether it helps them learn or only entertains. I built a prototype of three chapters and will test the whales chapter with 30 children aged 10 to 12 in Bishkek.</aside>
+</section>
+
+<!-- 4 · RESEARCH QUESTIONS -->
+<section class="slide rq" data-sec="03" data-name="Research questions" data-light>
+  <div class="in">
+    <p class="eyebrow r teal" style="--i:0"><b>03</b>Research question</p>
+    <p class="main-q r" style="--i:1">How does an animated, interactive web encyclopedia page affect <mark>knowledge retention</mark> and <mark>engagement</mark> among children aged 10–12 in Bishkek, compared to a static page with the same content?</p>
+    <div class="rq4">
+      <div style="--i:0;--c:#0a7590"><small>RQ1</small><b>Memory</b><span>now and after one week</span></div>
+      <div style="--i:1;--c:#d63a2f"><small>RQ2</small><b>Engagement</b><span>time on page, enjoyment</span></div>
+      <div style="--i:2;--c:#b44a83"><small>RQ3</small><b>Experience</b><span>in children’s own words</span></div>
+      <div style="--i:3;--c:#3d7d10"><small>RQ4</small><b>Elements</b><span>interactive vs text facts</span></div>
+    </div>
+  </div>
+  <aside class="notes">The main question: How does an animated, interactive web encyclopedia page affect knowledge retention and engagement among children aged 10 to 12 in Bishkek, compared to a static page with the same content? RQ1: is there a difference in how many facts children remember, immediately and one week later? RQ2: is there a difference in how long they stay on the page and how much they enjoy it? RQ3: how do children describe their experience of the page and its interactive elements? RQ4: do children remember facts from interactive elements differently from facts presented only in the text? Because earlier studies point in different directions, I do not start with fixed predictions; conclusions will rest only on the data.</aside>
+</section>
+
+<!-- 5 · LITERATURE + GAP -->
+<section class="slide lit" data-sec="04" data-name="Literature review and gap">
+  <div class="in">
+    <p class="eyebrow r" style="--i:0"><b>04</b>Literature review</p>
+    <h2 class="r" style="--i:1">Forty years of research, one open question</h2>
+    <div class="tl" aria-hidden="true" style="margin:50px 0 34px">
+      <div class="node up" style="left:3%;--i:0;--c:var(--aqua)"><i></i><span><b>1986</b>Paivio</span></div>
+      <div class="node dn" style="left:9%;--i:1;--c:var(--aqua)"><i></i><span><b>1988</b>Sweller</span></div>
+      <div class="node up hi" style="left:24%;--i:2;--c:var(--coral)"><i></i><span><b>1998</b>Harp &amp; Mayer</span></div>
+      <div class="node dn" style="left:34%;--i:3;--c:var(--coral)"><i></i><span><b>2002</b>Tversky et al.</span></div>
+      <div class="node up" style="left:46%;--i:4;--c:var(--coral)"><i></i><span><b>2007</b>Höffler &amp; Leutner</span></div>
+      <div class="node dn hi" style="left:58%;--i:5;--c:var(--coral)"><i></i><span><b>2012</b>Rey</span></div>
+      <div class="node up hi" style="left:66%;--i:6;--c:var(--violet)"><i></i><span><b>2015</b>Takacs et al.</span></div>
+      <div class="node dn" style="left:76%;--i:7;--c:var(--gold)"><i></i><span><b>2018</b>Delgado et al.</span></div>
+      <div class="node up" style="left:82%;--i:8;--c:var(--gold)"><i></i><span><b>2019</b>Clinton</span></div>
+      <div class="node dn hi" style="left:88%;--i:9;--c:var(--aqua)"><i></i><span><b>2021</b>Mayer</span></div>
+      <div class="node up hi" style="left:96%;--i:10;--c:#fff"><i></i><span><b>2026</b>This study</span></div>
+    </div>
+    <div class="takeaways">
+      <div class="tk" style="--i:0;--c:var(--aqua)"><b>Words + pictures help</b><span>Mayer, 2021 · Sweller, 1988</span></div>
+      <div class="tk" style="--i:1;--c:var(--coral)"><b>Decoration distracts</b><span>Harp &amp; Mayer, 1998 · Rey, 2012</span></div>
+      <div class="tk" style="--i:2;--c:var(--violet)"><b>Interaction must serve content</b><span>Takacs et al., 2015</span></div>
+    </div>
+    <div class="gapbar r" style="--i:8"><b>The gap</b><span>Ages 10–12</span><span>Factual content</span><span>Scrollytelling</span><span>Kyrgyzstan</span></div>
+  </div>
+  <aside class="notes">Research gives a mixed answer. People learn better from words and pictures together, but working memory is limited (Mayer, 2021; Sweller, 1988). Animation helps when it shows the content itself (Höffler and Leutner, 2007), but decorative “seductive details” can lower retention (Harp and Mayer, 1998; Rey, 2012). In children’s e-books, features help only when they are tied to the text; games and hotspots can distract (Takacs et al., 2015). Paper-versus-screen studies compare plain text only (Delgado et al., 2018; Clinton, 2019). The gap: interactive-book research focuses on children aged 3 to 8 and stories, not factual content for 10 to 12; scrollytelling has been studied with adult news audiences, not children; and there is almost no research in Kyrgyzstan.</aside>
+</section>
+
+<!-- 6 · PRODUCT -->
+<section class="slide ch prod" data-sec="05" data-name="The product" style="--c:var(--aqua)">
+  <div class="bg kb"><video muted loop playsinline poster="m/whale-rays.webp" preload="none"><source src="m/whale-rays.mp4" type="video/mp4"></video></div>
+  <div class="shade"></div>
+  <div class="live"><model-viewer data-src="../models/whale.glb" poster="poster/whale.webp" alt="3D humpback whale from the prototype, drag to spin" environment-image="env/ocean.jpg" tone-mapping="neutral" exposure="1.9" camera-controls disable-zoom interaction-prompt="none" camera-orbit="300deg 80deg 92%" data-life="swim"></model-viewer></div>
+  <div class="livecap" style="right:4vw;bottom:14%">Live 3D from the prototype · drag to spin</div>
+  <div class="in">
+    <p class="eyebrow r" style="--i:0"><b>05</b>The product</p>
+    <h2 class="huge r" style="--i:1">Not Wikipedia. <mark>A journey.</mark></h2>
+    <div class="chips r" style="--i:2">
+      <span style="--c:var(--aqua)"><b>3</b>chapters</span>
+      <span style="--c:var(--coral)"><b>26</b>3D models</span>
+      <span style="--c:var(--lime)"><b>20</b>interactions</span>
+      <span style="--c:var(--gold)"><b>0</b>cartoons</span>
+    </div>
+    <div class="princ r" style="--i:3"><span style="--c:var(--aqua)">Wonder first</span><span style="--c:var(--coral)">Real, not fake</span><span style="--c:var(--lime)">Touch to learn</span><span style="--c:var(--gold)">Short and deep</span><span style="--c:var(--violet)">Tested with children</span></div>
+  </div>
+  <aside class="notes">The product is the Living Encyclopedia. It is not Wikipedia for kids: Wikipedia is long text for adults. Each topic is one scrolling journey of 10 to 15 minutes that ends with a quiz. Three chapters are ready: whales, a dive from the surface to 4,000 metres; space, from Earth’s core to Pluto; and football, where the page is one 90-minute match. Everything is real: NASA and NOAA photos, real video, 26 3D models and 20 interactive elements. It runs in a browser on any tablet. Five principles guide every page: wonder first, real not fake, touch to learn, short and deep, and tested with children. This whale is a live 3D model from the site.</aside>
+</section>
+
+<!-- 7 · METHODOLOGY -->
+<section class="slide" data-sec="06" data-name="Methodology" data-exp style="background:radial-gradient(70% 60% at 30% 0%,#1b2a4a,#060912)">
+  <div class="in">
+    <p class="eyebrow r" style="--i:0"><b>06</b>Methodology</p>
+    <h2 class="r" style="--i:1">Mixed methods: numbers + voices</h2>
+    <div class="tiles" style="--n:5">
+      <div class="tile2" style="--i:0;--c:var(--aqua)"><div class="ti"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div><b>Test</b><span>now + 1 week</span></div>
+      <div class="tile2" style="--i:1;--c:var(--aqua)"><div class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg></div><b>Time on page</b><span>anonymous logs</span></div>
+      <div class="tile2" style="--i:2;--c:var(--aqua)"><div class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14c2 2.5 6 2.5 8 0"/><path d="M9 9h.01M15 9h.01"/></svg></div><b>Smileyometer</b><span>enjoyment</span></div>
+      <div class="tile2" style="--i:3;--c:var(--coral)"><div class="ti"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H8l-4 4z"/></svg></div><b>Focus groups</b><span>4 × 20 min</span></div>
+      <div class="tile2" style="--i:4;--c:var(--coral)"><div class="ti"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h6"/></svg></div><b>Content analysis</b><span>each element</span></div>
+    </div>
+    <div class="arena sm r" style="--i:6" id="arena">
+      <div class="room a"><span class="gold">Static · 15</span></div>
+      <div class="room b"><span class="aqua">Interactive · 15</span></div>
+    </div>
+  </div>
+  <aside class="notes">The study uses mixed methods, based on pragmatism: methods are chosen by what answers the question (Creswell and Plano Clark, 2018). The quantitative part is a small experiment. Thirty students in grades 4 to 6 from public schools in Bishkek are randomly split within each class into two groups of 15. One reads the interactive whales chapter; the other reads a static version with exactly the same text, facts and pictures, but no animation, sound or interaction. Data: a 10-question knowledge test right after reading and one week later (seven questions on facts, three on understanding; four facts come from interactive elements and six from the text only); time on page and scroll depth; and enjoyment with the Smileyometer and Again-Again table (Read and MacFarlane, 2006). The qualitative part: four focus groups of 4 to 5 children, about 20 minutes each, and a content analysis that codes every element of the chapter as content-related or decorative. A pilot with 3 to 4 children comes first; my own classes are not included.</aside>
+</section>
+
+<!-- 8 · ANALYSIS + ETHICS -->
+<section class="slide paper" data-sec="07" data-name="Analysis and ethics" data-light>
+  <div class="in">
+    <p class="eyebrow r teal" style="--i:0"><b>07</b>Analysis and ethics</p>
+    <h2 class="r" style="--i:1">Honest numbers, safe children</h2>
+    <div class="two">
+      <div>
+        <p class="colh r" style="--i:2">Analysis</p>
+        <div class="tiles big1" style="--n:1;margin-top:0">
+          <div class="tile2" style="--i:0;--c:#0a7590"><b>Mann–Whitney U</b><span>group vs group</span></div>
+          <div class="tile2" style="--i:1;--c:#0a7590"><b>Wilcoxon</b><span>now vs 1 week</span></div>
+          <div class="tile2" style="--i:2;--c:#b44a83"><b>Thematic analysis</b><span>focus groups</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="colh r" style="--i:3">Ethics</p>
+        <div class="tiles big2" style="--n:2;margin-top:0">
+          <div class="tile2" style="--i:3;--c:#3d7d10"><div class="ti"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div><b>Consent</b></div>
+          <div class="tile2" style="--i:4;--c:#0a7590"><div class="ti"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M10 14L21 3M21 14v7H3V3h7"/></svg></div><b>Free to stop</b></div>
+          <div class="tile2" style="--i:5;--c:#d63a2f"><div class="ti"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div><b>Anonymous</b></div>
+          <div class="tile2" style="--i:6;--c:#9a6a1f"><div class="ti"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8h14M7 8l-3 7h6zM17 8l-3 7h6z"/></svg></div><b>Neutral</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Analysis. The two groups are compared with the Mann–Whitney U test, which suits small samples; I will report effect sizes to show how big any difference is (Field, 2018). Changes between the first test and the test one week later are compared with the Wilcoxon signed-rank test. Focus-group transcripts are analysed with reflexive thematic analysis in six phases (Braun and Clarke, 2021), with a reflexive journal and discussion with my supervisor. Then numbers and words are compared: numbers show whether the formats differ, children’s words explain why. Ethics follows Graham et al. (2013): UCA ethics approval and school permission first, parents’ written consent and children’s own agreement; any child can stop at any time and results never affect grades; names are replaced with codes, data is stored on a password-protected computer and recordings are deleted after transcription. Because I built the encyclopedia, I keep a neutral position and report every result as it is. Limitations: small sample, one chapter, novelty of the format and a one-week delay, so this is an exploratory first step.</aside>
+</section>
+
+<!-- 9 · STARTUP -->
+<section class="slide beyond startup" data-sec="08" data-name="Why this research">
+  <div class="bg kb"><video muted loop playsinline poster="m/space-orbit.webp" preload="none"><source src="m/space-orbit.mp4" type="video/mp4"></video></div>
+  <div class="shade"></div>
+  <div class="in">
+    <p class="eyebrow r coral" style="--i:0"><b>08</b>Why this research</p>
+    <p class="huge r" style="--i:1;--c:var(--coral);max-width:20ch">This is my startup. First, <mark>proof it works.</mark></p>
+    <div class="road r" style="--i:3">
+      <div class="line"></div>
+      <div class="step done"><div class="dot">✓</div><h3>Prototype</h3><p>3 chapters</p></div>
+      <div class="step now"><div class="dot">2</div><h3>Research</h3><p>30 children</p></div>
+      <div class="step"><div class="dot">3</div><h3>More chapters</h3><p>from the results</p></div>
+      <div class="step"><div class="dot">4</div><h3>App launch</h3><p>with investment</p></div>
+    </div>
+  </div>
+  <aside class="notes">This is not only a diploma. The Living Encyclopedia is my startup: my company is discussing investment, and the plan is to launch it as an app. That is why I do the research first: before scaling, I want evidence that children need it and that it actually helps them learn, not only have fun. The contribution is academic (first evidence on interactive factual content and scrollytelling for 10 to 12-year-olds in Kyrgyzstan), practical (a tested prototype and recommendations for teachers and designers) and product. A possible next test is free choice: a printed version and a tablet on one table, to see what children pick; I will discuss it with my supervisor.</aside>
+</section>
+
+<!-- 10 · SHOWCASE -->
+<section class="slide show" data-sec="09" data-name="See it live">
+  <div class="in">
+    <p class="eyebrow r" style="--i:0"><b>09</b>See it live</p>
+    <h2 class="r" style="--i:1">Knowledge should <span style="color:var(--aqua)">feel alive</span></h2>
+    <div class="devices">
+      <div class="dev tab l" style="--c:var(--aqua)"><div class="scr"><img src="m/full-kity.webp" alt="Whales chapter scrolling on a tablet" style="--dur:44s"></div><span class="devcap">Whales</span></div>
+      <div class="dev laptop" style="--i:1;--c:var(--coral)"><div class="lid"><div class="scr"><img src="m/full-kosmos.webp" alt="Space chapter scrolling on a laptop" style="--dur:50s"></div></div><div class="base"></div><span class="devcap" style="bottom:-30px">Space</span></div>
+      <div class="dev tab r" style="--c:var(--lime)"><div class="scr"><img src="m/full-futbol.webp" alt="Football chapter scrolling on a tablet" style="--dur:38s"></div><span class="devcap">Football</span></div>
+    </div>
+    <div class="endrow r" style="--i:4">
+      <a class="btn" href="https://claude.ai/artifact/65j8rp4L9XFdJ3YMAPfYbY" target="_blank" rel="noopener">Open the encyclopedia ↗</a>
+      <button class="btn ghost" id="refBtn" type="button">References</button>
+    </div>
+    <p class="r dim" style="--i:5;margin-top:14px">Thank you. Questions are welcome.</p>
+  </div>
+  <aside class="notes">Here is the encyclopedia itself: whales on the tablet, space on the laptop, football on the second tablet. You can open it now with the button. Thank you, I am happy to answer questions.</aside>
+</section>
+
+</main>
+
+<div class="refpanel" id="refs" role="dialog" aria-modal="true" aria-label="References">
+  <div class="box">
+    <button class="close" id="refClose" aria-label="Close">×</button>
+    <h3>References</h3>
+    <div class="reflist">
+      <p>Braun, V., &amp; Clarke, V. (2021). <i>Thematic analysis: A practical guide.</i> SAGE.</p>
+      <p>Clinton, V. (2019). Reading from paper compared to screens. <i>Journal of Research in Reading, 42</i>(2), 288–325.</p>
+      <p>Creswell, J. W., &amp; Plano Clark, V. L. (2018). <i>Designing and conducting mixed methods research</i> (3rd ed.). SAGE.</p>
+      <p>Delgado, P., Vargas, C., Ackerman, R., &amp; Salmerón, L. (2018). Don’t throw away your printed books. <i>Educational Research Review, 25,</i> 23–38.</p>
+      <p>Field, A. (2018). <i>Discovering statistics using IBM SPSS Statistics</i> (5th ed.). SAGE.</p>
+      <p>Graham, A., Powell, M., Taylor, N., Anderson, D., &amp; Fitzgerald, R. (2013). <i>Ethical research involving children.</i> UNICEF Innocenti.</p>
+      <p>Harp, S. F., &amp; Mayer, R. E. (1998). How seductive details do their damage. <i>Journal of Educational Psychology, 90</i>(3), 414–434.</p>
+      <p>Höffler, T. N., &amp; Leutner, D. (2007). Instructional animation versus static pictures. <i>Learning and Instruction, 17</i>(6), 722–738.</p>
+      <p>Mayer, R. E. (2021). <i>Multimedia learning</i> (3rd ed.). Cambridge University Press.</p>
+      <p>OECD. (2010). <i>PISA 2009 results: What students know and can do</i> (Vol. I). OECD Publishing.</p>
+      <p>Paivio, A. (1986). <i>Mental representations: A dual coding approach.</i> Oxford University Press.</p>
+      <p>Read, J. C., &amp; MacFarlane, S. (2006). Using the Fun Toolkit. <i>Proceedings of IDC 2006,</i> 81–88.</p>
+      <p>Rey, G. D. (2012). A meta-analysis of the seductive detail effect. <i>Educational Research Review, 7</i>(3), 216–237.</p>
+      <p>Rideout, V., Peebles, A., Mann, S., &amp; Robb, M. B. (2022). <i>The Common Sense census: Media use by tweens and teens, 2021.</i></p>
+      <p>Sweller, J. (1988). Cognitive load during problem solving. <i>Cognitive Science, 12</i>(2), 257–285.</p>
+      <p>Takacs, Z. K., Swart, E. K., &amp; Bus, A. G. (2015). Technology-enhanced storybooks: A meta-analysis. <i>Review of Educational Research, 85</i>(4), 698–739.</p>
+      <p>Times of Central Asia. (2026, September 11). New OECD assessment reveals Central Asia’s student performance.</p>
+      <p>Tversky, B., Morrison, J. B., &amp; Bétrancourt, M. (2002). Animation: Can it facilitate? <i>IJHCS, 57</i>(4), 247–262.</p>
+      <p>Wolf, M. (2018). <i>Reader, come home: The reading brain in a digital world.</i> Harper.</p>
+    </div>
+  </div>
+</div>
+
+<div class="notepanel" id="notepanel" aria-live="polite"></div>
+<div class="hud" id="hud">
+  <div class="brand">THE LIVING ENCYCLOPEDIA<span id="secname"></span></div>
+  <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
+  <div class="nav"><button id="prev" aria-label="Previous slide">←</button><span id="count">01 / 10</span><button id="next" aria-label="Next slide">→</button></div>
+</div>
+
+<script>
+(()=>{
+const S=[...document.querySelectorAll('.slide')],N=S.length,dots=document.getElementById('dots'),hud=document.getElementById('hud');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur=-1,lock=0;
+const COLS=['var(--gold)','var(--coral)','var(--aqua)','var(--violet)','var(--aqua)','var(--lime)','var(--aqua)','var(--coral)','var(--lime)'];
+const toc=document.getElementById('toc');
+S.forEach((s,i)=>{const n=s.dataset.sec;if(!n)return;const li=document.createElement('li');const k=toc.children.length;li.style.setProperty('--i',k);li.style.setProperty('--c',COLS[k%COLS.length]);
+  li.innerHTML=`<button><b>${n}</b><span>${s.dataset.name}</span></button>`;li.querySelector('button').onclick=e=>go(i,e.clientX/innerWidth*100,e.clientY/innerHeight*100);toc.append(li)});
+const arena=document.getElementById('arena'),kids=[];
+for(let i=0;i<30;i++){const k=document.createElement('div');k.className='kid';arena.append(k);kids.push(k)}
+function splitKids(){
+  const H=arena.clientHeight,order=[...Array(30).keys()].sort(()=>Math.random()-.5);
+  kids.forEach(k=>{k.className='kid';k.style.left='calc(50% - 11px)';k.style.top='calc(50% - 11px)';k.style.transitionDelay='0ms'});
+  setTimeout(()=>order.forEach((idx,n)=>{const k=kids[idx],g=n<15?'a':'b',j=n%15,col=j%5,row=Math.floor(j/5);
+    k.classList.add(g==='a'?'ga':'gb');k.style.transitionDelay=(n*45)+'ms';
+    k.style.left=`calc(${g==='a'?4:54}% + ${col*16+6}% * .46)`;k.style.top=(H*.26+row*Math.min(36,H*.17))+'px';}),1400);
+}
+function go(i,ox,oy){
+  i=Math.max(0,Math.min(N-1,i));if(i===cur)return;
+  const old=cur>=0?S[cur]:null;
+  S.forEach(s=>s.classList.remove('prev'));
+  if(old){old.classList.remove('on');old.classList.add('prev');old.querySelectorAll('video').forEach(v=>v.pause());setTimeout(()=>old.classList.remove('prev'),1100)}
+  const fwd=!old||i>S.indexOf(old);cur=i;const s=S[i];
+  s.style.setProperty('--ox',(ox??(fwd?92:8))+'%');s.style.setProperty('--oy',(oy??88)+'%');
+  void s.offsetWidth;s.classList.add('on');
+  const inn=s.querySelector('.in');if(inn)inn.scrollTop=0;
+  [s,S[i+1]].forEach(x=>x&&x.querySelectorAll('model-viewer[data-src]').forEach(m=>{if(!m.getAttribute('src'))m.setAttribute('src',m.dataset.src)}));
+  s.querySelectorAll('video').forEach(v=>{v.muted=true;v.volume=0;v.currentTime=0;v.play().catch(()=>{})});
+  S[i+1]&&S[i+1].querySelectorAll('video[preload=none]').forEach(v=>v.preload='auto');
+  if(s.hasAttribute('data-exp'))splitKids();
+  hud.classList.toggle('light',s.hasAttribute('data-light'));
+  const nt=s.querySelector('.notes');document.getElementById('notepanel').innerHTML=nt?'<b>SPEAKER NOTES · press N to hide</b>'+nt.innerHTML:'';
+  document.getElementById('secname').textContent=s.dataset.sec?`  ·  ${s.dataset.sec} ${s.dataset.name.toUpperCase()}`:'';
+  [...dots.children].forEach((d,j)=>d.classList.toggle('on',j===i));
+  document.getElementById('count').textContent=String(i+1).padStart(2,'0')+' / '+N;
+  document.getElementById('bar').style.width=((i+1)/N*100)+'%';
+  history.replaceState(null,'','#'+(i+1));
+}
+S.forEach((s,i)=>{const b=document.createElement('button');b.setAttribute('aria-label',(i+1)+'. '+s.dataset.name);b.onclick=()=>go(i);dots.append(b)});
+const next=()=>go(cur+1),prev=()=>go(cur-1);
+const refs=document.getElementById('refs');
+document.getElementById('refBtn').onclick=()=>refs.classList.add('open');
+document.getElementById('refClose').onclick=()=>refs.classList.remove('open');
+refs.onclick=e=>{if(e.target===refs)refs.classList.remove('open')};
+document.getElementById('next').onclick=e=>go(cur+1,e.clientX/innerWidth*100,e.clientY/innerHeight*100);
+document.getElementById('prev').onclick=e=>go(cur-1,e.clientX/innerWidth*100,e.clientY/innerHeight*100);
+addEventListener('keydown',e=>{
+  if(refs.classList.contains('open')){if(e.key==='Escape')refs.classList.remove('open');return}
+  if(['ArrowRight','PageDown'].includes(e.key)||([' ','Enter'].includes(e.key)&&!e.target.closest('a,button'))){e.preventDefault();next()}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev()}
+  if(e.key==='Home')go(0);if(e.key==='End')go(N-1);
+  if(e.key==='n'||e.key==='N'||e.key==='т'||e.key==='Т')document.getElementById('notepanel').classList.toggle('open');
+});
+addEventListener('wheel',e=>{
+  if(refs.classList.contains('open')||e.target.closest('model-viewer'))return;
+  const inn=S[cur].querySelector('.in');
+  if(inn&&inn.scrollHeight>inn.clientHeight+4){const atTop=inn.scrollTop<=0,atEnd=inn.scrollTop+inn.clientHeight>=inn.scrollHeight-2;if((e.deltaY>0&&!atEnd)||(e.deltaY<0&&!atTop))return}
+  const now=Date.now();if(now-lock<1000||Math.abs(e.deltaY)<18)return;lock=now;e.deltaY>0?next():prev();
+},{passive:true});
+let x0=null,y0=null;
+addEventListener('touchstart',e=>{if(refs.classList.contains('open')||e.target.closest('model-viewer')){x0=null;return}x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3){dx<0?next():prev()}x0=null},{passive:true});
+if(!reduce)addEventListener('pointermove',e=>{const r=document.documentElement.style;r.setProperty('--mx',(e.clientX/innerWidth-.5).toFixed(3));r.setProperty('--my',(e.clientY/innerHeight-.5).toFixed(3))},{passive:true});
+if(!reduce){const t0=performance.now();(function tick(now){const t=(now-t0)/1000;
+  document.querySelectorAll('model-viewer[data-life=swim]').forEach(m=>{m.orientation=`${Math.sin(t*.7)*5}deg ${Math.sin(t*.45+1)*6}deg ${Math.sin(t*.25)*14}deg`});requestAnimationFrame(tick)})(t0)}
+const h=parseInt(location.hash.slice(1));go(h>0&&h<=N?h-1:0,50,50);
+})();
+</script>
+</body>
+</html>

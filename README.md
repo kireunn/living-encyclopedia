@@ -1,4 +1,6 @@
-# The Living Encyclopedia
+# Scroll, Play, Remember
+
+**The Effect of an Interactive Animated Web Encyclopedia on Children’s Knowledge Retention and Engagement** — the Living Encyclopedia.
 
 An interactive web encyclopedia for children aged 9–13, built for Erik Stybaev's diploma project (Communication and Media, University of Central Asia).
 

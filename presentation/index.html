@@ -480,6 +480,7 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
 .rq4 b{display:block;font-family:var(--fd);font-weight:800;font-size:clamp(17px,1.6vw,23px);color:var(--c);margin:6px 0}
 .rq4 span{font-size:14px;color:#3c4255;line-height:1.4}
 .notes{display:none}
+.notepanel ul{margin:0;padding-left:20px}.notepanel li{margin:0 0 6px}.notepanel li b{color:#ffd28a;font-family:inherit;font-size:inherit;letter-spacing:0;display:inline;margin:0}
 .rq4{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px 14px!important}.rq4 div{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:baseline;padding:16px 20px!important}.rq4 small{grid-row:span 2}.rq4 b{margin:0 0 4px!important}.rq4 span{grid-column:2;font-size:15.5px!important}@media(max-width:760px){.rq4{grid-template-columns:1fr!important}}
 .whyw{margin-top:22px;padding:14px 18px;border-left:3px solid var(--aqua);background:rgba(6,14,28,.55);backdrop-filter:blur(6px);border-radius:0 14px 14px 0;max-width:560px}.whyw small{display:block;font-family:var(--fd);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--aqua);margin-bottom:6px}.whyw p{margin:0;font-size:15.5px;color:#dbe4f3;line-height:1.5}
 .show .devices{height:min(42vh,430px)!important;flex:none}
@@ -490,7 +491,7 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
 .grid2 .huge{font-size:clamp(30px,3.6vw,56px)}
 .big1 .tile2{display:flex;align-items:baseline;gap:14px;padding:20px 22px}.big1 .tile2 b{font-size:clamp(18px,1.7vw,26px)}.big1 .tile2 span{margin:0;font-size:15px}
 .big2 .tile2{display:flex;align-items:center;gap:14px;padding:20px 22px}.big2 .tile2 .ti{margin:0;flex:none}.big2 .tile2 b{font-size:clamp(17px,1.5vw,22px)}
-.notepanel{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);width:min(900px,92vw);max-height:40vh;overflow-y:auto;z-index:30;background:rgba(8,12,24,.96);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:16px 20px;font-size:15px;line-height:1.55;color:#e6ebf7;display:none}
+.notepanel{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);width:min(900px,92vw);max-height:52vh;overflow-y:auto;z-index:30;background:rgba(8,12,24,.96);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:16px 20px;font-size:15px;line-height:1.55;color:#e6ebf7;display:none}
 .notepanel.open{display:block}
 .notepanel b{font-family:var(--fd);font-size:12px;letter-spacing:.1em;color:var(--aqua);display:block;margin-bottom:6px}
 </style>
@@ -517,7 +518,12 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
       <ol class="toc" id="toc"></ol>
     </div>
   </div>
-  <aside class="notes">Good morning. My diploma project is called “Scroll, Play, Remember: The Effect of an Interactive Animated Web Encyclopedia on Children’s Knowledge Retention and Engagement”. At its centre is the Living Encyclopedia: an interactive web encyclopedia for children aged 10 to 12, and a study of whether it helps them remember more and enjoy reading more. In the next ten minutes: my background, the project, the research questions, the literature, the product, the methodology, the analysis and ethics, why I am doing this research, and then the site itself.</aside>
+  <aside class="notes"><ul>
+<li>«Здравствуйте. Мой дипломный проект называется <i>Scroll, Play, Remember: The Effect of an Interactive Animated Web Encyclopedia on Children’s Knowledge Retention and Engagement</i>».</li>
+<li>В центре — «Живая энциклопедия»: интерактивная веб-энциклопедия для детей 10–12 лет.</li>
+<li>Исследую, помогает ли такой формат лучше запоминать и больше любить чтение.</li>
+<li>Структура: предыстория → проект → вопросы → литература → продукт → методология → анализ и этика → зачем исследование → сайт.</li>
+</ul></aside>
 </section>
 
 <!-- 2 · BACKGROUND -->
@@ -537,7 +543,13 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
     </div>
     <div class="photoq pop" style="--i:2"><img src="m/oc-breach.webp" alt="A humpback whale breaching"><div class="qq">“A website like this, about different topics, and interactive. Books are boring to read now.”<small>— a top student, after the lesson</small></div></div>
   </div>
-  <aside class="notes">As children, most of us got our first knowledge from books, and the most exciting one was the encyclopedia. For the last two years I have worked at a school with children of very different ages, and I noticed that the way they take in information has changed. Last year I taught logic and general knowledge, and for one lesson I made a bright, interactive presentation about whales. The children loved it, and a top student said: it would be great to have a website like this, about different topics, and interactive, because books are boring to read now.</aside>
+  <aside class="notes"><ul>
+<li>В детстве мы все получали знания из книг, самая интересная — энциклопедия.</li>
+<li>Последние 2 года работаю в школе с детьми разного возраста: они воспринимают информацию по-другому.</li>
+<li>В прошлом году на уроке логики и кругозора сделал яркую интерактивную презентацию про китов — детям очень понравилось.</li>
+<li>Отличница сказала: «Было бы классно, если бы был такой сайт про разные темы, интерактивный, книги сейчас читать скучно».</li>
+<li>С этого урока всё и началось. <b>Про Елену здесь не говорить.</b></li>
+</ul></aside>
 </section>
 
 <!-- 3 · PROJECT ABSTRACT -->
@@ -559,7 +571,14 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
       <div class="num" style="--i:4;--c:#3d7d10"><b>≈344</b><span>Kyrgyzstan’s PISA 2025 reading score<em>Times of Central Asia, 2026</em></span></div>
     </div>
   </div>
-  <aside class="notes">Printed encyclopedias now compete with short videos and games. Children aged 8 to 12 spend over five and a half hours a day on screen entertainment (Rideout et al., 2022). A meta-analysis of 54 studies with over 170,000 readers found that informational texts are understood better on paper (Delgado et al., 2018), and Wolf (2018) links digital habits to weaker deep reading. In Kyrgyzstan this is urgent: in PISA 2009 the country was last, with over 80% of 15-year-olds reading below the OECD average, and in PISA 2025 the score is about 344, still far below. My project asks whether the visual and interactive language of digital media can bring encyclopedic knowledge back to children, and whether it helps them learn or only entertains. I built a prototype of three chapters and will test the whales chapter with 30 children aged 10 to 12 in Bishkek.</aside>
+  <aside class="notes"><ul>
+<li>Энциклопедии конкурируют с короткими видео и играми.</li>
+<li><b>5,5 ч</b> в день у экранов, дети 8–12 лет (Rideout, 2022).</li>
+<li><b>54</b> исследования: с бумаги тексты понимают лучше (Delgado, 2018); глубокое чтение ослабевает (Wolf, 2018).</li>
+<li><b>80%+</b> подростков Кыргызстана читали ниже среднего ОЭСР, последнее место в PISA 2009; в PISA 2025 около <b>344</b>.</li>
+<li>Вопрос проекта: может ли язык цифровых медиа вернуть интерес к знаниям — помогает учиться или только развлекает?</li>
+<li>Прототип из 3 глав, проверка главы про китов на 30 детях.</li>
+</ul></aside>
 </section>
 
 <!-- 4 · RESEARCH QUESTIONS -->
@@ -575,7 +594,14 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
     </div>
     <span class="note r" style="--i:6">Previous research is conflicting, so no predictions: conclusions rest only on the data</span>
   </div>
-  <aside class="notes">The main question: How does an animated, interactive web encyclopedia page affect knowledge retention and engagement among children aged 10 to 12 in Bishkek, compared to a static page with the same content? RQ1: is there a difference in how many facts children remember, immediately and one week later? RQ2: is there a difference in how long they stay on the page and how much they enjoy it? RQ3: how do children describe their experience of the page and its interactive elements? RQ4: do children remember facts from interactive elements differently from facts presented only in the text? Because earlier studies point in different directions, I do not start with fixed predictions; conclusions will rest only on the data.</aside>
+  <aside class="notes"><ul>
+<li>Прочитай главный вопрос со слайда.</li>
+<li><b>RQ1 Memory</b> — сколько фактов помнят сразу и через неделю.</li>
+<li><b>RQ2 Engagement</b> — сколько времени на странице и насколько нравится.</li>
+<li><b>RQ3 Experience</b> — как дети сами описывают чтение.</li>
+<li><b>RQ4 Elements</b> — запоминаются ли факты из интерактива иначе, чем из текста.</li>
+<li>Готовых гипотез нет: прошлые исследования противоречат друг другу, выводы только по данным.</li>
+</ul></aside>
 </section>
 
 <!-- 5 · LITERATURE + GAP -->
@@ -603,7 +629,13 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
     </div>
     <div class="gapbar r" style="--i:8"><b>The gap</b><span>Ages 10–12</span><span>Factual content</span><span>Scrollytelling</span><span>Kyrgyzstan</span></div>
   </div>
-  <aside class="notes">Research gives a mixed answer. People learn better from words and pictures together, but working memory is limited (Mayer, 2021; Sweller, 1988). Animation helps when it shows the content itself (Höffler and Leutner, 2007), but decorative “seductive details” can lower retention (Harp and Mayer, 1998; Rey, 2012). In children’s e-books, features help only when they are tied to the text; games and hotspots can distract (Takacs et al., 2015). Paper-versus-screen studies compare plain text only (Delgado et al., 2018; Clinton, 2019). The gap: interactive-book research focuses on children aged 3 to 8 and stories, not factual content for 10 to 12; scrollytelling has been studied with adult news audiences, not children; and there is almost no research in Kyrgyzstan.</aside>
+  <aside class="notes"><ul>
+<li>Исследованиям 40 лет, картина неоднозначная.</li>
+<li>Слова + картинки помогают, но рабочая память ограничена (Mayer, Sweller).</li>
+<li>Украшения, «соблазнительные детали», снижают запоминание (Harp &amp; Mayer, Rey).</li>
+<li>Интерактив в детских книгах помогает, только если связан с текстом (Takacs).</li>
+<li><b>Пробел:</b> нет исследований для 10–12 лет, по фактическому контенту, по scrollytelling и по Кыргызстану.</li>
+</ul></aside>
 </section>
 
 <!-- 6 · PRODUCT -->
@@ -624,7 +656,15 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
     <div class="princ r" style="--i:3"><span style="--c:var(--aqua)">Wonder first</span><span style="--c:var(--coral)">Real, not fake</span><span style="--c:var(--lime)">Touch to learn</span><span style="--c:var(--gold)">Short and deep</span><span style="--c:var(--violet)">Tested with children</span></div>
     <div class="whyw r" style="--i:4"><small>Why chapter 1 is about whales</small><p>Elena asked me this, and at first I could not remember. Now I know: the idea was born in my whales lesson, so the encyclopedia begins where it started.</p></div>
   </div>
-  <aside class="notes">The product is the Living Encyclopedia. It is not Wikipedia for kids: Wikipedia is long text for adults. Each topic is one scrolling journey of 10 to 15 minutes that ends with a quiz. Three chapters are ready: whales, a dive from the surface to 4,000 metres; space, from Earth’s core to Pluto; and football, where the page is one 90-minute match. Everything is real: NASA and NOAA photos, real video, 26 3D models and 20 interactive elements. It runs in a browser on any tablet. Five principles guide every page: wonder first, real not fake, touch to learn, short and deep, and tested with children. Why is the first chapter about whales? Elena asked me this, and at first I could not remember. Now I know: the whole idea came to me in that whales lesson, when the children got so excited and my student asked for a website like that. So the encyclopedia begins exactly where the idea started. This whale is a live 3D model from the site.</aside>
+  <aside class="notes"><ul>
+<li>Не Википедия для детей — Википедия это длинные тексты для взрослых.</li>
+<li>Каждая тема — путешествие на 10–15 минут, в конце тест.</li>
+<li>3 главы: Киты (погружение на 4000 м), Космос (от ядра Земли до Плутона), Футбол (матч на 90 минут).</li>
+<li>Всё настоящее: фото NASA и NOAA, видео, 26 3D-моделей, 20 интерактивов; работает в браузере на любом планшете.</li>
+<li>Пять принципов на слайде.</li>
+<li><b>Елена</b> спросила, почему первая глава про китов. Сначала не вспомнил, потом понял: идея пришла на том уроке про китов — поэтому энциклопедия начинается с них.</li>
+<li>Покрути кита мышкой: «Это живая 3D-модель с сайта».</li>
+</ul></aside>
 </section>
 
 <!-- 7 · METHODOLOGY -->
@@ -644,7 +684,14 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
       <div class="room b"><span class="aqua">Interactive · 15</span></div>
     </div>
   </div>
-  <aside class="notes">The study uses mixed methods, based on pragmatism: methods are chosen by what answers the question (Creswell and Plano Clark, 2018). The quantitative part is a small experiment. Thirty students in grades 4 to 6 from public schools in Bishkek are randomly split within each class into two groups of 15. One reads the interactive whales chapter; the other reads a static version with exactly the same text, facts and pictures, but no animation, sound or interaction. Data: a 10-question knowledge test right after reading and one week later (seven questions on facts, three on understanding; four facts come from interactive elements and six from the text only); time on page and scroll depth; and enjoyment with the Smileyometer and Again-Again table (Read and MacFarlane, 2006). The qualitative part: four focus groups of 4 to 5 children, about 20 minutes each, and a content analysis that codes every element of the chapter as content-related or decorative. A pilot with 3 to 4 children comes first; my own classes are not included.</aside>
+  <aside class="notes"><ul>
+<li>Смешанный метод: цифры + голоса детей.</li>
+<li>30 учеников 4–6 классов, Бишкек; в каждом классе случайно делим на 2 группы по 15 (покажи на точки).</li>
+<li>Одна группа — интерактивная глава про китов, другая — статичная с тем же текстом и картинками.</li>
+<li>Цифры: тест из 10 вопросов сразу и через неделю, время на странице, смайлики Fun Toolkit.</li>
+<li>Голоса: 4 фокус-группы по 4–5 детей + контент-анализ (элемент по содержанию или декоративный).</li>
+<li>Сначала пилот на 3–4 детях; мои ученики не участвуют.</li>
+</ul></aside>
 </section>
 
 <!-- 8 · ANALYSIS + ETHICS -->
@@ -672,7 +719,15 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
       </div>
     </div>
   </div>
-  <aside class="notes">Analysis. The two groups are compared with the Mann–Whitney U test, which suits small samples; I will report effect sizes to show how big any difference is (Field, 2018). Changes between the first test and the test one week later are compared with the Wilcoxon signed-rank test. Focus-group transcripts are analysed with reflexive thematic analysis in six phases (Braun and Clarke, 2021), with a reflexive journal and discussion with my supervisor. Then numbers and words are compared: numbers show whether the formats differ, children’s words explain why. Ethics follows Graham et al. (2013): UCA ethics approval and school permission first, parents’ written consent and children’s own agreement; any child can stop at any time and results never affect grades; names are replaced with codes, data is stored on a password-protected computer and recordings are deleted after transcription. Because I built the encyclopedia, I keep a neutral position and report every result as it is. Limitations: small sample, one chapter, novelty of the format and a one-week delay, so this is an exploratory first step.</aside>
+  <aside class="notes"><ul>
+<li>Манна–Уитни — сравнить группы (подходит для маленьких выборок).</li>
+<li>Уилкоксон — сравнить сразу и через неделю.</li>
+<li>Тематический анализ (Braun &amp; Clarke) — фокус-группы.</li>
+<li>Цифры показывают, есть ли разница, слова детей объясняют почему.</li>
+<li><b>Consent</b> — одобрение UCA и школы, согласие родителей и детей. <b>Free to stop</b> — можно остановиться, на оценки не влияет.</li>
+<li><b>Anonymous</b> — коды вместо имён, записи удаляю. <b>Neutral</b> — сайт мой, поэтому сообщаю результаты как есть.</li>
+<li>Ограничения: маленькая выборка, одна глава, эффект новизны — первый, разведочный шаг.</li>
+</ul></aside>
 </section>
 
 <!-- 9 · STARTUP -->
@@ -690,7 +745,13 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
       <div class="step"><div class="dot">4</div><h3>App launch</h3><p>with investment</p></div>
     </div>
   </div>
-  <aside class="notes">This is not only a diploma. The Living Encyclopedia is my startup: my company is discussing investment, and the plan is to launch it as an app. That is why I do the research first: before scaling, I want evidence that children need it and that it actually helps them learn, not only have fun. The contribution is academic (first evidence on interactive factual content and scrollytelling for 10 to 12-year-olds in Kyrgyzstan), practical (a tested prototype and recommendations for teachers and designers) and product. A possible next test is free choice: a printed version and a tablet on one table, to see what children pick; I will discuss it with my supervisor.</aside>
+  <aside class="notes"><ul>
+<li>Это не только диплом — это мой стартап.</li>
+<li>С компанией обсуждаем инвестиции, план — запустить как приложение.</li>
+<li>Поэтому сначала нужны доказательства: нужно ли это детям и работает ли, а не только развлекает.</li>
+<li>Путь: прототип готов → исследование → новые главы по результатам → запуск приложения.</li>
+<li>Хочу добавить тест со свободным выбором: книга и планшет на столе — что выберут дети (обсужу с руководителем).</li>
+</ul></aside>
 </section>
 
 <!-- 10 · SHOWCASE -->
@@ -709,7 +770,12 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
     </div>
     <p class="r dim" style="--i:5;margin-top:14px">Thank you. Questions are welcome.</p>
   </div>
-  <aside class="notes">Here is the encyclopedia itself: whales on the tablet, space on the laptop, football on the second tablet. You can open it now with the button. Thank you, I am happy to answer questions.</aside>
+  <aside class="notes"><ul>
+<li>«Вот сама энциклопедия: на планшете Киты, на ноутбуке Космос, на втором планшете Футбол».</li>
+<li>«Знания должны быть живыми».</li>
+<li>«Спасибо за внимание, с радостью отвечу на вопросы».</li>
+<li>Если есть время — нажми «Open the encyclopedia» и покажи сайт вживую.</li>
+</ul></aside>
 </section>
 
 </main>
@@ -781,7 +847,7 @@ function go(i,ox,oy){
   S[i+1]&&S[i+1].querySelectorAll('video[preload=none]').forEach(v=>v.preload='auto');
   if(s.hasAttribute('data-exp'))splitKids();
   hud.classList.toggle('light',s.hasAttribute('data-light'));
-  const nt=s.querySelector('.notes');document.getElementById('notepanel').innerHTML=nt?'<b>SPEAKER NOTES · press N to hide</b>'+nt.innerHTML:'';
+  const nt=s.querySelector('.notes');document.getElementById('notepanel').innerHTML=nt?'<b>ПОДСКАЗКА · слайд '+(i+1)+' · N — скрыть · P — отдельное окно</b>'+nt.innerHTML:'';window.__hint&&window.__hint(i);
   document.getElementById('secname').textContent=s.dataset.sec?`  ·  ${s.dataset.sec} ${s.dataset.name.toUpperCase()}`:'';
   [...dots.children].forEach((d,j)=>d.classList.toggle('on',j===i));
   document.getElementById('count').textContent=String(i+1).padStart(2,'0')+' / '+N;
@@ -802,6 +868,7 @@ addEventListener('keydown',e=>{
   if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev()}
   if(e.key==='Home')go(0);if(e.key==='End')go(N-1);
   if(e.key==='n'||e.key==='N'||e.key==='т'||e.key==='Т')document.getElementById('notepanel').classList.toggle('open');
+  if(e.key==='p'||e.key==='P'||e.key==='з'||e.key==='З'){window.__pw=window.open('','hints','width=620,height=720');window.__hint(cur);}
 });
 addEventListener('wheel',e=>{
   if(refs.classList.contains('open')||e.target.closest('model-viewer'))return;
@@ -817,6 +884,11 @@ if(!reduce){const t0=performance.now();(function tick(now){const t=(now-t0)/1000
   document.querySelectorAll('model-viewer[data-life=swim]').forEach(m=>{m.orientation=`${Math.sin(t*.7)*5}deg ${Math.sin(t*.45+1)*6}deg ${Math.sin(t*.25)*14}deg`});requestAnimationFrame(tick)})(t0)}
 const h=parseInt(location.hash.slice(1));go(h>0&&h<=N?h-1:0,50,50);
 })();
+</script>
+<script>
+window.__hint=function(i){var w=window.__pw;if(!w||w.closed)return;var S=document.querySelectorAll('.slide'),s=S[i],n=s&&s.querySelector('.notes'),nx=S[i+1];
+w.document.title='Подсказки · '+(i+1)+' / '+S.length;
+w.document.body.innerHTML='<style>body{margin:0;padding:26px 30px;background:#0b1020;color:#eef2fb;font:20px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}h1{font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:#35d6e6;margin:0 0 14px}li{margin:0 0 12px}b{color:#ffd28a}i{color:#bfe9ff}.nx{margin-top:26px;padding-top:14px;border-top:1px solid #2a3350;font-size:15px;color:#9aa5c0}</style><h1>Слайд '+(i+1)+' / '+S.length+' · '+(s.dataset.name||'')+'</h1>'+(n?n.innerHTML:'')+(nx?'<div class="nx">Дальше: '+(nx.dataset.name||'')+'</div>':'');};
 </script>
 </body>
 </html>

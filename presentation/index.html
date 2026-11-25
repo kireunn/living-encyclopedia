@@ -480,6 +480,9 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
 .rq4 b{display:block;font-family:var(--fd);font-weight:800;font-size:clamp(17px,1.6vw,23px);color:var(--c);margin:6px 0}
 .rq4 span{font-size:14px;color:#3c4255;line-height:1.4}
 .notes{display:none}
+.big1 .tile2{flex-direction:column;align-items:flex-start!important;gap:4px!important;padding:14px 20px!important}.big1 .tile2 span{font-size:14.5px!important}
+.big2 .tile2{display:grid!important;grid-template-columns:auto 1fr;column-gap:14px;align-items:center;padding:14px 16px!important}.big2 .tile2 .ti{grid-row:span 2}.big2 .tile2 span{grid-column:2;margin:2px 0 0!important;font-size:13.5px!important;line-height:1.35}
+.tiles[style*="--n:5"] .tile2 span{font-size:13.5px;line-height:1.4}
 .rq4{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px 14px!important}.rq4 div{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:baseline;padding:16px 20px!important}.rq4 small{grid-row:span 2}.rq4 b{margin:0 0 4px!important}.rq4 span{grid-column:2;font-size:15.5px!important}@media(max-width:760px){.rq4{grid-template-columns:1fr!important}}
 .whyw{margin-top:22px;padding:14px 18px;border-left:3px solid var(--aqua);background:rgba(6,14,28,.55);backdrop-filter:blur(6px);border-radius:0 14px 14px 0;max-width:560px}.whyw small{display:block;font-family:var(--fd);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--aqua);margin-bottom:6px}.whyw p{margin:0;font-size:15.5px;color:#dbe4f3;line-height:1.5}
 .show .devices{height:min(42vh,430px)!important;flex:none}
@@ -632,12 +635,13 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
   <div class="in">
     <p class="eyebrow r" style="--i:0"><b>06</b>Methodology</p>
     <h2 class="r" style="--i:1">Mixed methods: numbers + voices</h2>
+    <p class="r dim" style="--i:2;margin:-4px 0 0;font-size:16px">Numbers show <b style="color:#fff">how much</b> the formats differ; children’s words explain <b style="color:#fff">why</b>.</p>
     <div class="tiles" style="--n:5">
-      <div class="tile2" style="--i:0;--c:var(--aqua)"><div class="ti"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div><b>Test</b><span>now + 1 week</span></div>
-      <div class="tile2" style="--i:1;--c:var(--aqua)"><div class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg></div><b>Time on page</b><span>anonymous logs</span></div>
-      <div class="tile2" style="--i:2;--c:var(--aqua)"><div class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14c2 2.5 6 2.5 8 0"/><path d="M9 9h.01M15 9h.01"/></svg></div><b>Smileyometer</b><span>enjoyment</span></div>
-      <div class="tile2" style="--i:3;--c:var(--coral)"><div class="ti"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H8l-4 4z"/></svg></div><b>Focus groups</b><span>4 × 20 min</span></div>
-      <div class="tile2" style="--i:4;--c:var(--coral)"><div class="ti"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h6"/></svg></div><b>Content analysis</b><span>each element</span></div>
+      <div class="tile2" style="--i:0;--c:var(--aqua)"><div class="ti"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div><b>Test</b><span>10 questions on the facts, right after reading and again one week later</span></div>
+      <div class="tile2" style="--i:1;--c:var(--aqua)"><div class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg></div><b>Time on page</b><span>how long each child reads, recorded under a code, not a name</span></div>
+      <div class="tile2" style="--i:2;--c:var(--aqua)"><div class="ti"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14c2 2.5 6 2.5 8 0"/><path d="M9 9h.01M15 9h.01"/></svg></div><b>Smileyometer</b><span>children rate how much they liked it on 5 smiley faces</span></div>
+      <div class="tile2" style="--i:3;--c:var(--coral)"><div class="ti"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H8l-4 4z"/></svg></div><b>Focus groups</b><span>short group talks, 4–5 children, about what they felt</span></div>
+      <div class="tile2" style="--i:4;--c:var(--coral)"><div class="ti"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h6"/></svg></div><b>Content analysis</b><span>every element of the page marked as content or decoration</span></div>
     </div>
     <div class="arena sm r" style="--i:6" id="arena">
       <div class="room a"><span class="gold">Static · 15</span></div>
@@ -656,18 +660,18 @@ p{margin:0 0 1em;max-width:62ch;text-wrap:pretty}
       <div>
         <p class="colh r" style="--i:2">Analysis</p>
         <div class="tiles big1" style="--n:1;margin-top:0">
-          <div class="tile2" style="--i:0;--c:#0a7590"><b>Mann–Whitney U</b><span>group vs group</span></div>
-          <div class="tile2" style="--i:1;--c:#0a7590"><b>Wilcoxon</b><span>now vs 1 week</span></div>
-          <div class="tile2" style="--i:2;--c:#b44a83"><b>Thematic analysis</b><span>focus groups</span></div>
+          <div class="tile2" style="--i:0;--c:#0a7590"><b>Mann–Whitney U</b><span>compares the scores of the two groups; works with small samples</span></div>
+          <div class="tile2" style="--i:1;--c:#0a7590"><b>Wilcoxon</b><span>compares each child’s score right after reading and one week later</span></div>
+          <div class="tile2" style="--i:2;--c:#b44a83"><b>Thematic analysis</b><span>finds the ideas that repeat in what children say</span></div>
         </div>
       </div>
       <div>
         <p class="colh r" style="--i:3">Ethics</p>
         <div class="tiles big2" style="--n:2;margin-top:0">
-          <div class="tile2" style="--i:3;--c:#3d7d10"><div class="ti"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div><b>Consent</b></div>
-          <div class="tile2" style="--i:4;--c:#0a7590"><div class="ti"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M10 14L21 3M21 14v7H3V3h7"/></svg></div><b>Free to stop</b></div>
-          <div class="tile2" style="--i:5;--c:#d63a2f"><div class="ti"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div><b>Anonymous</b></div>
-          <div class="tile2" style="--i:6;--c:#9a6a1f"><div class="ti"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8h14M7 8l-3 7h6zM17 8l-3 7h6z"/></svg></div><b>Neutral</b></div>
+          <div class="tile2" style="--i:3;--c:#3d7d10"><div class="ti"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div><b>Consent</b><span>ethics approval, parents and children agree first</span></div>
+          <div class="tile2" style="--i:4;--c:#0a7590"><div class="ti"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M10 14L21 3M21 14v7H3V3h7"/></svg></div><b>Free to stop</b><span>any child can leave at any time; no effect on grades</span></div>
+          <div class="tile2" style="--i:5;--c:#d63a2f"><div class="ti"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div><b>Anonymous</b><span>codes instead of names; recordings deleted</span></div>
+          <div class="tile2" style="--i:6;--c:#9a6a1f"><div class="ti"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8h14M7 8l-3 7h6zM17 8l-3 7h6z"/></svg></div><b>Neutral</b><span>I built the site, so I report every result as it is</span></div>
         </div>
       </div>
     </div>
